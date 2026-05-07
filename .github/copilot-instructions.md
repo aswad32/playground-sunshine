@@ -118,6 +118,14 @@ playground-sunshine/
 **Key rules:**
 
 - `data/tools.ts` is the tool metadata registry. Always update it when adding a new tool.
+- Every tool entry must include a `category` field that matches one of the values in `CATEGORY_ORDER` (also exported from `data/tools.ts`). The home page groups tools by category using this field. Current categories and the tools in each:
+  - **Formatters** — JSON Formatter, SQL Formatter, Markdown Previewer
+  - **Encoders & Decoders** — Base64, URL Encoder/Decoder, JWT Decoder
+  - **Generators** — UUID/NanoID, Hash Generator, Fake Data Generator, QR Code Generator
+  - **Date & Time** — Unix Timestamp Converter, Cron Expression Builder
+  - **Text & Code** — Regex Tester, Text Diff Checker
+  - **Images** — Image Compressor / Resizer
+  When adding a new tool, pick the most fitting existing category or add a new entry to `CATEGORY_ORDER` if none fit.
 - `utils/` contains pure functions only — no Vue reactivity, directly testable with Vitest.
 - `components/ui/` holds shared primitives reused across tools; `components/tools/` holds tool-specific pieces.
 - Use `<script setup lang="ts">` and runtime `defineProps` for all components.
@@ -366,13 +374,15 @@ When generating a new tool, Copilot should include:
 
 - Page/component
 - Utility function
-- Tool metadata update — add an entry to `data/tools.ts` with the tool's name, route, description, and any relevant tags. Example:
+- Tool metadata update — add an entry to `data/tools.ts` with the tool's name, route, description, tags, icon, and **category**. The `category` must match a value in `CATEGORY_ORDER`. Also add the icon component to the `iconMap` in `pages/index.vue`. Example:
   ```ts
   {
     name: 'JSON Formatter',
     route: '/tools/json-formatter',
     description: 'Format, validate, and minify JSON directly in your browser.',
     tags: ['json', 'formatter', 'validator'],
+    icon: 'Braces',
+    category: 'Formatters',
   }
   ```
 - Basic tests where suitable

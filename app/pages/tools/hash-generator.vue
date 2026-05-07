@@ -175,6 +175,9 @@ watch(mode, () => {
         </span>
         <input id="hash-file" type="file" class="sr-only" @change="onFileChange" />
       </label>
+      <p v-if="!uploadedFile" class="text-xs text-gray-400 mt-1">
+        Choose a file above to generate its hash.
+      </p>
       <button
         v-if="uploadedFile"
         class="mt-2 flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-600 text-white text-sm font-medium hover:bg-indigo-700 transition-colors"

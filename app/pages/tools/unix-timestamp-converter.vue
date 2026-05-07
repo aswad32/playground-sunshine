@@ -88,6 +88,7 @@ function clearDate() {
         </div>
         <button
           class="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-gray-300 bg-white text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+          aria-label="Fill with current timestamp"
           @click="useNow"
         >
           <Clock class="w-4 h-4" />

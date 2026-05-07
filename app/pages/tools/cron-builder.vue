@@ -26,6 +26,7 @@ const { copy, copied } = useClipboard()
 
 const explanation = computed(() => explainCron(rawExpression.value))
 const nextRuns = computed(() => getNextRuns(rawExpression.value, 5))
+const is6Field = computed(() => rawExpression.value.trim().split(/\s+/).length === 6)
 
 function clearAll() {
   fields.min = '*'
@@ -103,6 +104,9 @@ function applyPreset(value: string) {
       </div>
       <p class="text-xs text-gray-400">
         Format: <span class="font-mono">minute hour day-of-month month day-of-week</span>
+      </p>
+      <p v-if="is6Field" class="text-xs text-amber-600">
+        6-field expressions (with a seconds field) are not supported. Use 5 fields only.
       </p>
     </div>
 

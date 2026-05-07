@@ -77,4 +77,19 @@ describe('generateFakeData', () => {
       }
     }
   })
+
+  it('all 10 data types produce non-empty values', () => {
+    const allTypes: DataType[] = ['name', 'email', 'phone', 'address', 'company', 'uuid', 'date', 'lorem', 'number', 'url']
+    const result = generateFakeData({ types: allTypes, rows: 3, format: 'json' })
+    expect(result.error).toBeNull()
+    const parsed = JSON.parse(result.output)
+    expect(parsed).toHaveLength(3)
+    for (const row of parsed) {
+      for (const type of allTypes) {
+        const value = row[DATA_TYPE_LABELS[type]]
+        expect(typeof value === 'string' || typeof value === 'number').toBe(true)
+        expect(String(value).length).toBeGreaterThan(0)
+      }
+    }
+  })
 })
