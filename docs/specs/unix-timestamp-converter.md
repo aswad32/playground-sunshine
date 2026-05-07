@@ -18,7 +18,7 @@ Convert Unix timestamps to human-readable dates and vice versa. Support seconds 
 
 - Convert timestamp → date — show the human-readable UTC and local date/time
 - Convert date → timestamp — show the Unix timestamp in seconds and milliseconds
-- Use now — fill the timestamp input with the current time
+- Use now — fill the timestamp input with the current Unix time in the active unit (seconds or milliseconds); button should have a clear aria-label ("Fill with current timestamp")
 - Copy — copy the result to clipboard
 - Clear — reset inputs and output
 

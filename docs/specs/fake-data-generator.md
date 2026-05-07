@@ -37,5 +37,9 @@ Runs fully in the browser. No data is sent to a server.
 
 - Generates correct number of rows
 - JSON output is valid parseable JSON
-- CSV output has correct column headers
+- CSV output has correct column headers matching selected data types
+- Plain list output has one entry per row
 - Empty type selection shows error
+- Each supported data type (name, email, phone, address, company, UUID, date, lorem ipsum, number, URL) produces non-empty values
+- Row count is clamped to 1 when 0 is entered
+- Row count is clamped to 100 when a value above 100 is entered

@@ -16,9 +16,14 @@ Generate cryptographic hashes of text or files using common algorithms. Clearly 
 
 ## Actions
 
-- Generate — compute the hash
+- Generate — compute the hash (button is disabled in file mode until a file has been selected)
 - Copy — copy the hash to clipboard
 - Clear — reset input and output
+
+## UI Notes
+
+- In file mode, show hint text "Choose a file above to generate its hash" when no file is selected yet.
+- Generate button should remain disabled until input is non-empty (text mode) or a file is chosen (file mode).
 
 ## Output
 
@@ -35,6 +40,10 @@ Runs fully in the browser. Text and file contents are never sent to a server. Di
 ## Tests
 
 - Known input produces correct SHA-256 hash
+- Known input produces correct SHA-512 hash
 - Known input produces correct MD5 hash
-- File input is hashed correctly
+- Known input produces correct SHA-1 hash
+- File input is hashed correctly (SHA-256)
 - Empty input shows error
+- Generate button is disabled when no input is provided (text mode)
+- Generate button is disabled before a file is chosen (file mode)

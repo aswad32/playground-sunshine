@@ -95,6 +95,14 @@ const expiresLabel = computed(() => {
       Expires: <span class="font-medium text-gray-800">{{ expiresLabel }}</span>
     </div>
 
+    <!-- No expiry claim -->
+    <div
+      v-else-if="result.header"
+      class="mb-6 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-500"
+    >
+      No expiry information in this token.
+    </div>
+
     <!-- Decoded sections -->
     <div v-if="result.header" class="flex flex-col gap-6">
       <!-- Header -->

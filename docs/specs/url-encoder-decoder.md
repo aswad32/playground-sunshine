@@ -11,6 +11,7 @@ Encode a plain URL or string using percent-encoding and decode an encoded URL ba
 ## Inputs
 
 - Textarea: plain URL or encoded URL string
+- Placeholder text: "Enter plain URL or text to encode, or an encoded URL to decode..."
 
 ## Actions
 

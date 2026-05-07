@@ -11,7 +11,9 @@ Format and beautify SQL queries to make them readable and consistent.
 ## Inputs
 
 - Textarea: raw SQL query
-- Select: SQL dialect — Standard, MySQL, PostgreSQL, SQLite, T-SQL
+- Select: SQL dialect — Standard SQL (`sql`), MySQL, PostgreSQL, SQLite, Transact-SQL (T-SQL)
+
+> Note: "Standard SQL" maps to the `sql` language identifier in the `sql-formatter` library.
 
 ## Actions
 
@@ -37,5 +39,7 @@ Runs fully in the browser. SQL input is never sent to a server.
 - Simple SELECT query is formatted correctly
 - Multi-table JOIN query is formatted with correct indentation
 - Keywords are uppercased consistently
+- PostgreSQL dialect formats the same query differently from Standard SQL (dialect switching works)
+- MySQL dialect is applied when selected
 - Invalid SQL shows a helpful error message
 - Empty input produces no output

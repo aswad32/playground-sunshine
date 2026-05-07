@@ -34,6 +34,8 @@ Runs fully in the browser. Input is never sent to a server.
 ## Tests
 
 - Valid URL generates a scannable QR code
+- Short text input generates a QR code
 - Empty input shows empty state
-- Overly long input shows error
+- Input at exactly the maximum length generates a QR code without error
+- Input that exceeds maximum length shows error
 - Download produces a non-empty PNG file

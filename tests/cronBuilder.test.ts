@@ -49,6 +49,25 @@ describe('explainCron', () => {
     expect(explanation.toLowerCase()).toContain('every 5 minutes')
   })
 
+  it('explains "*/15 * * * *" as every 15 minutes', () => {
+    const { explanation, error } = explainCron('*/15 * * * *')
+    expect(error).toBeNull()
+    expect(explanation.toLowerCase()).toContain('every 15 minutes')
+  })
+
+  it('explains "0 9-17 * * 1-5" containing a range', () => {
+    const { explanation, error } = explainCron('0 9-17 * * 1-5')
+    // Should not throw and should return some explanation
+    expect(error).toBeNull()
+    expect(explanation.length).toBeGreaterThan(0)
+  })
+
+  it('returns an error for a 6-field expression', () => {
+    const { explanation, error } = explainCron('0 * * * * *')
+    expect(explanation).toBe('')
+    expect(error).toBeTruthy()
+  })
+
   it('returns an error for invalid expressions', () => {
     const { explanation, error } = explainCron('invalid')
     expect(explanation).toBe('')
