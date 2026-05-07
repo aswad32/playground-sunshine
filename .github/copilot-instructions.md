@@ -22,6 +22,7 @@ Tools:
 - [Markdown Previewer](../docs/specs/markdown-previewer.md)
 - [SQL Formatter](../docs/specs/sql-formatter.md)
 - [Image Compressor / Resizer](../docs/specs/image-compressor.md)
+- [Text Diff Checker](../docs/specs/text-diff-checker.md)
 
 The project should feel like a clean developer playground: simple, bright, fast, and trustworthy.
 
