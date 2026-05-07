@@ -8,6 +8,8 @@ The goal is to provide small utilities that are simple, polished, useful, and sa
 
 Tools:
 
+**Live (built):**
+
 - [JSON Formatter / Validator](../docs/specs/json-formatter.md)
 - [JWT Decoder](../docs/specs/jwt-decoder.md)
 - [Base64 Encoder / Decoder](../docs/specs/base64.md)
@@ -23,6 +25,19 @@ Tools:
 - [SQL Formatter](../docs/specs/sql-formatter.md)
 - [Image Compressor / Resizer](../docs/specs/image-compressor.md)
 - [Text Diff Checker](../docs/specs/text-diff-checker.md)
+
+**Planned (spec ready, not yet built):**
+
+- [YAML Formatter / Validator](../docs/specs/yaml-formatter.md)
+- [.env File Formatter](../docs/specs/env-formatter.md)
+- [HTML Entity Encoder / Decoder](../docs/specs/html-entity-encoder.md)
+- [Number Base Converter](../docs/specs/number-base-converter.md)
+- [Password Generator](../docs/specs/password-generator.md)
+- [String Case Converter](../docs/specs/string-case-converter.md)
+- [Word & Character Counter](../docs/specs/word-counter.md)
+- [CSV ↔ JSON Converter](../docs/specs/csv-json-converter.md)
+- [Color Picker & Converter](../docs/specs/color-converter.md)
+- [Contrast Checker](../docs/specs/contrast-checker.md)
 
 The project should feel like a clean developer playground: simple, bright, fast, and trustworthy.
 
@@ -119,12 +134,13 @@ playground-sunshine/
 
 - `data/tools.ts` is the tool metadata registry. Always update it when adding a new tool.
 - Every tool entry must include a `category` field that matches one of the values in `CATEGORY_ORDER` (also exported from `data/tools.ts`). The home page groups tools by category using this field. Current categories and the tools in each:
-  - **Formatters** — JSON Formatter, SQL Formatter, Markdown Previewer
-  - **Encoders & Decoders** — Base64, URL Encoder/Decoder, JWT Decoder
-  - **Generators** — UUID/NanoID, Hash Generator, Fake Data Generator, QR Code Generator
+  - **Formatters** — JSON Formatter, SQL Formatter, Markdown Previewer, YAML Formatter, .env Formatter
+  - **Encoders & Decoders** — Base64, URL Encoder/Decoder, JWT Decoder, HTML Entity Encoder, Number Base Converter
+  - **Generators** — UUID/NanoID, Hash Generator, Fake Data Generator, QR Code Generator, Password Generator
   - **Date & Time** — Unix Timestamp Converter, Cron Expression Builder
-  - **Text & Code** — Regex Tester, Text Diff Checker
+  - **Text & Code** — Regex Tester, Text Diff Checker, String Case Converter, Word & Character Counter, CSV ↔ JSON Converter
   - **Images** — Image Compressor / Resizer
+  - **Colors** — Color Picker & Converter, Contrast Checker
   When adding a new tool, pick the most fitting existing category or add a new entry to `CATEGORY_ORDER` if none fit.
 - `utils/` contains pure functions only — no Vue reactivity, directly testable with Vitest.
 - `components/ui/` holds shared primitives reused across tools; `components/tools/` holds tool-specific pieces.
