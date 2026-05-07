@@ -41,5 +41,8 @@ Runs fully in the browser using Canvas and Blob APIs. Images are never uploaded 
 - Compressing a JPEG produces a smaller file
 - Resizing to a target width produces correct output dimensions
 - Aspect ratio is maintained when only width is set
+- Aspect ratio is maintained when only height is set
+- Both width and height can be set independently when aspect ratio toggle is off
+- Target dimension of 0 or negative shows validation error
 - Unsupported file type shows error
 - Before/after file sizes are displayed correctly

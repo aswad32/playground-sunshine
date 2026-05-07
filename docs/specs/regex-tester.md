@@ -16,8 +16,8 @@ Test regular expressions against sample text and visualise matches. Show match g
 
 ## Actions
 
-- Test — run the regex and highlight matches
-- Copy regex — copy the pattern to clipboard
+- Matching is live / real-time (no explicit Test button required) — results update as the user types the pattern, flags, or test string
+- Copy regex — copy the full regex in `/pattern/flags` format to clipboard
 - Clear — reset all inputs
 
 ## Output
@@ -41,4 +41,6 @@ Runs fully in the browser.
 - Global flag returns all matches
 - Case-insensitive flag works correctly
 - Named capture groups are shown correctly
+- Named capture groups from `(?<name>...)` are displayed alongside numbered groups
 - Invalid regex pattern shows error
+- Pattern updates without clicking a button (real-time behaviour)

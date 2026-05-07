@@ -11,6 +11,7 @@ Render Markdown source as formatted HTML in real time, so users can preview how 
 ## Inputs
 
 - Textarea: Markdown source
+- Page loads with a short default Markdown sample pre-filled so the preview panel is not empty on first visit.
 
 ## Actions
 
@@ -25,7 +26,7 @@ Rendered HTML preview displayed alongside or below the input.
 
 ## Error Handling
 
-- Empty input shows an empty preview with a placeholder prompt.
+- Empty input shows an empty preview with a dashed-border placeholder prompt.
 - Malformed Markdown should still render best-effort — do not show an error for render issues.
 
 ## Privacy

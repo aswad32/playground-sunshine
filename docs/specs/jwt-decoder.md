@@ -22,6 +22,7 @@ Decode a JWT (JSON Web Token) and display its header, payload, and signature in 
 
 - Header: decoded JSON object
 - Payload: decoded JSON object with `exp` shown as a human-readable date/time if present
+- If the token has no `exp` claim, show: "No expiry information in this token."
 - Signature: raw value (not verified)
 - Warning banner if token is expired
 
@@ -38,6 +39,7 @@ Runs fully in the browser. The token is never sent to a server. Display a note w
 
 - Valid JWT decodes header and payload correctly
 - Expired token shows expiry warning
-- Token with no `exp` shows no expiry warning
-- Invalid format shows a helpful error message
+- Token with no `exp` claim shows "No expiry information in this token."
+- Invalid format (fewer than 3 dot-separated parts) shows a helpful error message
+- Invalid Base64url encoding in payload shows a helpful error message
 - Empty input produces no output

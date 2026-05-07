@@ -22,8 +22,9 @@ Allow users to paste JSON, validate it, format it, and minify it directly in the
 
 ## Output
 
-- Formatted or minified JSON text
-- Friendly error message if invalid
+- Formatted or minified JSON text in a read-only textarea
+- Textarea shows a placeholder ("Formatted output will appear here") until an action is run
+- Friendly error message if invalid — rendered with `aria-live="polite"` so screen readers announce it
 
 ## Error Handling
 
