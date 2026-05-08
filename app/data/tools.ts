@@ -171,6 +171,14 @@ const tools: Tool[] = [
     category: 'Text & Code',
   },
   {
+    name: 'String Case Converter',
+    route: '/tools/string-case-converter',
+    description: 'Convert text between camelCase, PascalCase, snake_case, kebab-case, SCREAMING_SNAKE_CASE, and Title Case instantly.',
+    tags: ['case', 'string', 'camelcase', 'snakecase', 'kebab', 'converter'],
+    icon: 'CaseSensitive',
+    category: 'Text & Code',
+  },
+  {
     name: 'Image Compressor / Resizer',
     route: '/tools/image-compressor',
     description: 'Compress and resize JPEG, PNG, and WebP images in your browser. See before/after file size — no server upload.',
