@@ -210,6 +210,14 @@ const tools: Tool[] = [
     icon: 'Pipette',
     category: 'Colors',
   },
+  {
+    name: 'Contrast Checker',
+    route: '/tools/contrast-checker',
+    description: 'Check WCAG AA and AAA color contrast ratios for any foreground and background color pair. Build accessible UIs.',
+    tags: ['contrast', 'wcag', 'accessibility', 'color', 'a11y'],
+    icon: 'Contrast',
+    category: 'Colors',
+  },
 ]
 
 export default tools
