@@ -35,6 +35,9 @@ Tools:
 - [CSV ↔ JSON Converter](../docs/specs/csv-json-converter.md)
 - [Color Picker & Converter](../docs/specs/color-converter.md)
 - [Contrast Checker](../docs/specs/contrast-checker.md)
+- [Sudoku Player](../docs/specs/sudoku-player.md)
+- [Sudoku Generator](../docs/specs/sudoku-generator.md)
+- [Sudoku Solver](../docs/specs/sudoku-solver.md)
 
 **Planned (spec ready, not yet built):**
 
@@ -76,7 +79,7 @@ The project uses:
 - ESLint
 - Prettier
 - Vitest for unit tests where useful
-- Lucide Vue (`lucide-vue-next`) for icons — use outline style; prefer named imports
+- Lucide Vue (`lucide-vue-next`) for icons — use outline style; prefer named imports. Current icons in `iconMap`: `Braces, KeyRound, Binary, Fingerprint, Clock, Link, CalendarClock, Search, Hash, Database, QrCode, FileText, Table2, Image, GitCompare, AlignLeft, FileKey, Code, ShieldCheck, CaseSensitive, AlignJustify, ArrowLeftRight, Pipette, Contrast, Grid3x3, LayoutGrid, Gamepad2`
 
 When generating code, prefer this stack unless existing project files show otherwise.
 
@@ -142,6 +145,7 @@ playground-sunshine/
   - **Text & Code** — Regex Tester, Text Diff Checker, String Case Converter, Word & Character Counter, CSV ↔ JSON Converter
   - **Images** — Image Compressor / Resizer
   - **Colors** — Color Picker & Converter, Contrast Checker
+  - **Games & Puzzles** — Sudoku Player, Sudoku Generator, Sudoku Solver
   When adding a new tool, pick the most fitting existing category or add a new entry to `CATEGORY_ORDER` if none fit.
 - `utils/` contains pure functions only — no Vue reactivity, directly testable with Vitest.
 - `components/ui/` holds shared primitives reused across tools; `components/tools/` holds tool-specific pieces.

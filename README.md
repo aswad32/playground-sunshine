@@ -71,6 +71,13 @@ A collection of fast, free, privacy-friendly tools for developers and everyday u
 | [Color Picker & Converter](/tools/color-converter) | Convert colors between HEX, RGB, HSL, and HSB |
 | [Contrast Checker](/tools/contrast-checker) | Check WCAG AA and AAA color contrast ratios for accessible design |
 
+### Games & Puzzles
+| Tool | Description |
+|---|---|
+| [Sudoku Player](/tools/sudoku-player) | Play Sudoku in your browser — conflict highlighting, pencil marks, timer, and undo |
+| [Sudoku Generator](/tools/sudoku-generator) | Generate unique-solution puzzles at Easy / Medium / Hard / Expert difficulty |
+| [Sudoku Solver](/tools/sudoku-solver) | Paste an 81-char string or enter manually, solve instantly, detect no-solution or multi-solution puzzles |
+
 ---
 
 ## Tech Stack
