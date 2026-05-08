@@ -156,7 +156,15 @@ playground-sunshine/
 │   │   ├── terms.vue       # Terms of Use
 │   │   └── tools/          # One .vue file per tool
 │   └── utils/              # Pure utility functions (no Vue reactivity)
-├── docs/specs/             # Tool specs (one .md per tool)
+├── docs/specs/             # Tool specs, organised by category
+│   ├── formatters/
+│   ├── encoders-decoders/
+│   ├── generators/
+│   ├── date-time/
+│   ├── text-code/
+│   ├── images/
+│   ├── colors/
+│   └── games-puzzles/
 ├── tests/                  # Vitest unit tests (mirrors utils/)
 ├── public/                 # Static assets (favicon…)
 └── nuxt.config.ts
