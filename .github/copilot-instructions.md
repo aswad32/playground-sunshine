@@ -10,34 +10,49 @@ Tools:
 
 **Live (built):**
 
-- [JSON Formatter / Validator](../docs/specs/json-formatter.md)
-- [JWT Decoder](../docs/specs/jwt-decoder.md)
-- [Base64 Encoder / Decoder](../docs/specs/base64.md)
-- [UUID / NanoID Generator](../docs/specs/uuid-nanoid-generator.md)
-- [Unix Timestamp Converter](../docs/specs/unix-timestamp-converter.md)
-- [Cron Expression Builder](../docs/specs/cron-builder.md)
-- [Regex Tester](../docs/specs/regex-tester.md)
-- [URL Encoder / Decoder](../docs/specs/url-encoder-decoder.md)
-- [Hash Generator](../docs/specs/hash-generator.md)
-- [Fake Data Generator](../docs/specs/fake-data-generator.md)
-- [QR Code Generator](../docs/specs/qr-code-generator.md)
-- [Markdown Previewer](../docs/specs/markdown-previewer.md)
-- [SQL Formatter](../docs/specs/sql-formatter.md)
-- [Image Compressor / Resizer](../docs/specs/image-compressor.md)
-- [Text Diff Checker](../docs/specs/text-diff-checker.md)
-- [YAML Formatter / Validator](../docs/specs/yaml-formatter.md)
-- [.env File Formatter](../docs/specs/env-formatter.md)
-- [HTML Entity Encoder / Decoder](../docs/specs/html-entity-encoder.md)
-- [Number Base Converter](../docs/specs/number-base-converter.md)
-- [Password Generator](../docs/specs/password-generator.md)
-- [String Case Converter](../docs/specs/string-case-converter.md)
-- [Word & Character Counter](../docs/specs/word-counter.md)
-- [CSV ↔ JSON Converter](../docs/specs/csv-json-converter.md)
-- [Color Picker & Converter](../docs/specs/color-converter.md)
-- [Contrast Checker](../docs/specs/contrast-checker.md)
-- [Sudoku Player](../docs/specs/sudoku-player.md)
-- [Sudoku Generator](../docs/specs/sudoku-generator.md)
-- [Sudoku Solver](../docs/specs/sudoku-solver.md)
+Formatters:
+- [JSON Formatter / Validator](../docs/specs/formatters/json-formatter.md)
+- [SQL Formatter](../docs/specs/formatters/sql-formatter.md)
+- [Markdown Previewer](../docs/specs/formatters/markdown-previewer.md)
+- [YAML Formatter / Validator](../docs/specs/formatters/yaml-formatter.md)
+- [.env File Formatter](../docs/specs/formatters/env-formatter.md)
+
+Encoders & Decoders:
+- [Base64 Encoder / Decoder](../docs/specs/encoders-decoders/base64.md)
+- [URL Encoder / Decoder](../docs/specs/encoders-decoders/url-encoder-decoder.md)
+- [JWT Decoder](../docs/specs/encoders-decoders/jwt-decoder.md)
+- [HTML Entity Encoder / Decoder](../docs/specs/encoders-decoders/html-entity-encoder.md)
+- [Number Base Converter](../docs/specs/encoders-decoders/number-base-converter.md)
+
+Generators:
+- [UUID / NanoID Generator](../docs/specs/generators/uuid-nanoid-generator.md)
+- [Hash Generator](../docs/specs/generators/hash-generator.md)
+- [Fake Data Generator](../docs/specs/generators/fake-data-generator.md)
+- [QR Code Generator](../docs/specs/generators/qr-code-generator.md)
+- [Password Generator](../docs/specs/generators/password-generator.md)
+
+Date & Time:
+- [Unix Timestamp Converter](../docs/specs/date-time/unix-timestamp-converter.md)
+- [Cron Expression Builder](../docs/specs/date-time/cron-builder.md)
+
+Text & Code:
+- [Regex Tester](../docs/specs/text-code/regex-tester.md)
+- [Text Diff Checker](../docs/specs/text-code/text-diff-checker.md)
+- [String Case Converter](../docs/specs/text-code/string-case-converter.md)
+- [Word & Character Counter](../docs/specs/text-code/word-counter.md)
+- [CSV ↔ JSON Converter](../docs/specs/text-code/csv-json-converter.md)
+
+Images:
+- [Image Compressor / Resizer](../docs/specs/images/image-compressor.md)
+
+Colors:
+- [Color Picker & Converter](../docs/specs/colors/color-converter.md)
+- [Contrast Checker](../docs/specs/colors/contrast-checker.md)
+
+Games & Puzzles:
+- [Sudoku Player](../docs/specs/games-puzzles/sudoku-player.md)
+- [Sudoku Generator](../docs/specs/games-puzzles/sudoku-generator.md)
+- [Sudoku Solver](../docs/specs/games-puzzles/sudoku-solver.md)
 
 **Planned (spec ready, not yet built):**
 
@@ -86,6 +101,35 @@ When generating code, prefer this stack unless existing project files show other
 **State management:** Prefer local component state (`ref`, `computed`). Do not add Pinia unless cross-tool shared state is explicitly needed.
 
 **i18n:** No i18n at this time. All UI copy is English.
+
+---
+
+## Mandatory Workflow — Issue First
+
+**Every code change requires a GitHub issue before any branch or file is touched.**
+
+```
+gh issue create → git checkout develop && git pull origin develop → git checkout -b feature/<issue-number>-short-description → implement → commit → git push → gh pr create --base develop
+```
+
+Always pull the latest `develop` from remote before branching. This ensures you build on top of all merged work from other team members and avoids unnecessary merge conflicts.
+
+Full steps: see [`specs/contributing.md`](../specs/contributing.md).
+
+- Branch naming: `feature/<issue-number>-<short-kebab-description>`
+- Commit message: `feat: description (#N)` with `Closes #N` in the body
+- PRs always target `develop`, never `main`
+- Labels: `enhancement`, `bug`, `documentation`, `other`
+
+### Pre-implementation checklist — MUST be satisfied before touching any file
+
+Before using any file creation or editing tool, all three of these steps MUST already be complete:
+
+1. **Issue created** — a GitHub issue exists and you have its number `#N`
+2. **Branch synced** — `git checkout develop && git pull origin develop` has been run
+3. **Feature branch active** — `git checkout -b feature/<N>-description` has been run and confirmed
+
+Do not create, edit, or delete any file until all three are done. If the user asks you to implement something and these steps are not yet complete, perform them first — in order — before writing a single line of code.
 
 ---
 
