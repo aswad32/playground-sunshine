@@ -179,6 +179,14 @@ const tools: Tool[] = [
     category: 'Text & Code',
   },
   {
+    name: 'Word & Character Counter',
+    route: '/tools/word-counter',
+    description: 'Count words, characters, sentences, paragraphs, and reading time for any block of text — live as you type.',
+    tags: ['word count', 'character count', 'text', 'counter', 'reading time'],
+    icon: 'AlignJustify',
+    category: 'Text & Code',
+  },
+  {
     name: 'Image Compressor / Resizer',
     route: '/tools/image-compressor',
     description: 'Compress and resize JPEG, PNG, and WebP images in your browser. See before/after file size — no server upload.',
