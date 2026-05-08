@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import {
   Braces, KeyRound, Binary, Fingerprint, Clock, Link, CalendarClock,
-  Search, Hash, Database, QrCode, FileText, Table2, Image, GitCompare,
+  Search, Hash, Database, QrCode, FileText, Table2, Image, GitCompare, AlignLeft,
 } from 'lucide-vue-next'
 import tools, { CATEGORY_ORDER } from '~/data/tools'
 
 const iconMap: Record<string, unknown> = {
   Braces, KeyRound, Binary, Fingerprint, Clock, Link, CalendarClock,
-  Search, Hash, Database, QrCode, FileText, Table2, Image, GitCompare,
+  Search, Hash, Database, QrCode, FileText, Table2, Image, GitCompare, AlignLeft,
 }
 
 const groups = computed(() =>

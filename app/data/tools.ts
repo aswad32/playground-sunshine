@@ -14,6 +14,7 @@ export const CATEGORY_ORDER: string[] = [
   'Date & Time',
   'Text & Code',
   'Images',
+  'Colors',
 ]
 
 const tools: Tool[] = [
@@ -23,6 +24,14 @@ const tools: Tool[] = [
     description: 'Format, validate, and minify JSON directly in your browser.',
     tags: ['json', 'formatter', 'validator'],
     icon: 'Braces',
+    category: 'Formatters',
+  },
+  {
+    name: 'YAML Formatter',
+    route: '/tools/yaml-formatter',
+    description: 'Validate and format YAML with consistent 2-space indentation directly in your browser.',
+    tags: ['yaml', 'formatter', 'validator'],
+    icon: 'AlignLeft',
     category: 'Formatters',
   },
   {
