@@ -67,6 +67,14 @@ const tools: Tool[] = [
     category: 'Encoders & Decoders',
   },
   {
+    name: 'Number Base Converter',
+    route: '/tools/number-base-converter',
+    description: 'Convert numbers between binary, octal, decimal, and hexadecimal in real time — directly in your browser.',
+    tags: ['binary', 'hex', 'octal', 'decimal', 'base', 'converter'],
+    icon: 'Hash',
+    category: 'Encoders & Decoders',
+  },
+  {
     name: 'Base64 Encoder / Decoder',
     route: '/tools/base64',
     description: 'Encode text to Base64 or decode Base64 back to plain text directly in your browser.',
