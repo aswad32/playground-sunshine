@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Download } from 'lucide-vue-next'
+import { Download, FolderOpen } from 'lucide-vue-next'
 import { formatJson, minifyJson } from '~/utils/jsonFormatter'
 
 useSeoMeta({
@@ -10,8 +10,31 @@ useSeoMeta({
 const input = ref('')
 const output = ref('')
 const error = ref<string | null>(null)
+const fileInput = ref<HTMLInputElement | null>(null)
 
 const { copy, copied } = useClipboard()
+
+function openFilePicker() {
+  fileInput.value?.click()
+}
+
+function onFileSelected(event: Event) {
+  const file = (event.target as HTMLInputElement).files?.[0]
+  if (!file) return
+
+  const reader = new FileReader()
+  reader.onload = () => {
+    input.value = reader.result as string
+    runFormat()
+  }
+  reader.onerror = () => {
+    error.value = 'Could not read the file. Please try again.'
+  }
+  reader.readAsText(file)
+
+  // Reset so the same file can be re-selected if needed
+  ;(event.target as HTMLInputElement).value = ''
+}
 
 function runFormat() {
   const result = formatJson(input.value)
@@ -76,6 +99,22 @@ function download() {
           >
             Minify
           </button>
+          <button
+            type="button"
+            class="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors"
+            @click="openFilePicker"
+          >
+            <FolderOpen :size="14" />
+            Open File
+          </button>
+          <input
+            ref="fileInput"
+            type="file"
+            accept=".json,application/json"
+            class="hidden"
+            aria-hidden="true"
+            @change="onFileSelected"
+          />
           <button
             type="button"
             class="rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors"
