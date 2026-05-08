@@ -15,6 +15,7 @@ export const CATEGORY_ORDER: string[] = [
   'Text & Code',
   'Images',
   'Colors',
+  'Games & Puzzles',
 ]
 
 const tools: Tool[] = [
@@ -217,6 +218,30 @@ const tools: Tool[] = [
     tags: ['contrast', 'wcag', 'accessibility', 'color', 'a11y'],
     icon: 'Contrast',
     category: 'Colors',
+  },
+  {
+    name: 'Sudoku Player',
+    route: '/tools/sudoku-player',
+    description: 'Play Sudoku in your browser at any difficulty. Conflict highlighting, pencil marks, timer, and undo — fully private, no install.',
+    tags: ['sudoku', 'puzzle', 'game', 'logic'],
+    icon: 'Grid3x3',
+    category: 'Games & Puzzles',
+  },
+  {
+    name: 'Sudoku Generator',
+    route: '/tools/sudoku-generator',
+    description: 'Generate a Sudoku puzzle at Easy, Medium, Hard, or Expert difficulty with a guaranteed unique solution. Play or solve it directly.',
+    tags: ['sudoku', 'puzzle', 'generator', 'logic'],
+    icon: 'LayoutGrid',
+    category: 'Games & Puzzles',
+  },
+  {
+    name: 'Sudoku Solver',
+    route: '/tools/sudoku-solver',
+    description: 'Paste an 81-character puzzle string or enter a puzzle manually and solve it instantly. Detects when no solution or multiple solutions exist.',
+    tags: ['sudoku', 'solver', 'puzzle', 'logic'],
+    icon: 'Gamepad2',
+    category: 'Games & Puzzles',
   },
 ]
 
