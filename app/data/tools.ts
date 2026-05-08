@@ -14,6 +14,7 @@ export const CATEGORY_ORDER: string[] = [
   'Date & Time',
   'Text & Code',
   'Images',
+  'Colors',
 ]
 
 const tools: Tool[] = [
@@ -23,6 +24,22 @@ const tools: Tool[] = [
     description: 'Format, validate, and minify JSON directly in your browser.',
     tags: ['json', 'formatter', 'validator'],
     icon: 'Braces',
+    category: 'Formatters',
+  },
+  {
+    name: 'YAML Formatter',
+    route: '/tools/yaml-formatter',
+    description: 'Validate and format YAML with consistent 2-space indentation directly in your browser.',
+    tags: ['yaml', 'formatter', 'validator'],
+    icon: 'AlignLeft',
+    category: 'Formatters',
+  },
+  {
+    name: '.env Formatter',
+    route: '/tools/env-formatter',
+    description: 'Clean up .env files, trim whitespace, detect duplicate keys, and sort alphabetically — right in your browser.',
+    tags: ['env', 'dotenv', 'formatter', 'validator', 'secrets'],
+    icon: 'FileKey',
     category: 'Formatters',
   },
   {
@@ -40,6 +57,22 @@ const tools: Tool[] = [
     tags: ['markdown', 'previewer', 'html', 'renderer'],
     icon: 'FileText',
     category: 'Formatters',
+  },
+  {
+    name: 'HTML Entity Encoder / Decoder',
+    route: '/tools/html-entity-encoder',
+    description: 'Encode special characters to HTML entities or decode them back to plain text — directly in your browser.',
+    tags: ['html', 'entity', 'encoder', 'decoder', 'escape'],
+    icon: 'Code',
+    category: 'Encoders & Decoders',
+  },
+  {
+    name: 'Number Base Converter',
+    route: '/tools/number-base-converter',
+    description: 'Convert numbers between binary, octal, decimal, and hexadecimal in real time — directly in your browser.',
+    tags: ['binary', 'hex', 'octal', 'decimal', 'base', 'converter'],
+    icon: 'Hash',
+    category: 'Encoders & Decoders',
   },
   {
     name: 'Base64 Encoder / Decoder',
@@ -71,6 +104,14 @@ const tools: Tool[] = [
     description: 'Generate UUID v4 and NanoID values instantly in your browser.',
     tags: ['uuid', 'nanoid', 'generator', 'id'],
     icon: 'Fingerprint',
+    category: 'Generators',
+  },
+  {
+    name: 'Password Generator',
+    route: '/tools/password-generator',
+    description: 'Generate strong, random passwords with configurable length and character sets — using your browser’s secure crypto API.',
+    tags: ['password', 'generator', 'security', 'crypto'],
+    icon: 'ShieldCheck',
     category: 'Generators',
   },
   {
@@ -130,12 +171,52 @@ const tools: Tool[] = [
     category: 'Text & Code',
   },
   {
+    name: 'String Case Converter',
+    route: '/tools/string-case-converter',
+    description: 'Convert text between camelCase, PascalCase, snake_case, kebab-case, SCREAMING_SNAKE_CASE, and Title Case instantly.',
+    tags: ['case', 'string', 'camelcase', 'snakecase', 'kebab', 'converter'],
+    icon: 'CaseSensitive',
+    category: 'Text & Code',
+  },
+  {
+    name: 'Word & Character Counter',
+    route: '/tools/word-counter',
+    description: 'Count words, characters, sentences, paragraphs, and reading time for any block of text — live as you type.',
+    tags: ['word count', 'character count', 'text', 'counter', 'reading time'],
+    icon: 'AlignJustify',
+    category: 'Text & Code',
+  },
+  {
+    name: 'CSV ↔ JSON Converter',
+    route: '/tools/csv-json-converter',
+    description: 'Convert CSV to JSON or JSON to CSV directly in your browser. Handles quoted fields, commas inside values, and complex structures.',
+    tags: ['csv', 'json', 'converter', 'data', 'table'],
+    icon: 'ArrowLeftRight',
+    category: 'Text & Code',
+  },
+  {
     name: 'Image Compressor / Resizer',
     route: '/tools/image-compressor',
     description: 'Compress and resize JPEG, PNG, and WebP images in your browser. See before/after file size — no server upload.',
     tags: ['image', 'compressor', 'resizer', 'jpeg', 'png', 'webp'],
     icon: 'Image',
     category: 'Images',
+  },
+  {
+    name: 'Color Picker & Converter',
+    route: '/tools/color-converter',
+    description: 'Convert colors between HEX, RGB, HSL, and HSB instantly. Pick a color visually and see all formats update in real time.',
+    tags: ['color', 'hex', 'rgb', 'hsl', 'hsb', 'picker', 'converter'],
+    icon: 'Pipette',
+    category: 'Colors',
+  },
+  {
+    name: 'Contrast Checker',
+    route: '/tools/contrast-checker',
+    description: 'Check WCAG AA and AAA color contrast ratios for any foreground and background color pair. Build accessible UIs.',
+    tags: ['contrast', 'wcag', 'accessibility', 'color', 'a11y'],
+    icon: 'Contrast',
+    category: 'Colors',
   },
 ]
 
