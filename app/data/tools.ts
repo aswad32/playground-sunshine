@@ -202,6 +202,14 @@ const tools: Tool[] = [
     icon: 'Image',
     category: 'Images',
   },
+  {
+    name: 'Color Picker & Converter',
+    route: '/tools/color-converter',
+    description: 'Convert colors between HEX, RGB, HSL, and HSB instantly. Pick a color visually and see all formats update in real time.',
+    tags: ['color', 'hex', 'rgb', 'hsl', 'hsb', 'picker', 'converter'],
+    icon: 'Pipette',
+    category: 'Colors',
+  },
 ]
 
 export default tools
