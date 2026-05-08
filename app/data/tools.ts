@@ -35,6 +35,14 @@ const tools: Tool[] = [
     category: 'Formatters',
   },
   {
+    name: '.env Formatter',
+    route: '/tools/env-formatter',
+    description: 'Clean up .env files, trim whitespace, detect duplicate keys, and sort alphabetically — right in your browser.',
+    tags: ['env', 'dotenv', 'formatter', 'validator', 'secrets'],
+    icon: 'FileKey',
+    category: 'Formatters',
+  },
+  {
     name: 'SQL Formatter',
     route: '/tools/sql-formatter',
     description: 'Beautify SQL queries with consistent indentation and keyword casing. Supports MySQL, PostgreSQL, SQLite, and T-SQL.',
