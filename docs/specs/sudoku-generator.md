@@ -34,7 +34,7 @@ Expert puzzles may take slightly longer to generate (up to ~1s on slow devices) 
 - **Copy as grid** — copy a human-readable ASCII grid representation
 - **Play this puzzle** — open the puzzle in the Sudoku Player (`/tools/sudoku-player?puzzle=<string>`)
 - **Solve this puzzle** — open the puzzle in the Sudoku Solver (`/tools/sudoku-solver?puzzle=<string>`)
-- **Download as image** *(stretch goal)* — export the blank puzzle grid as a PNG
+- **Export to PDF** — generate and download a PDF of multiple puzzles (see below)
 
 ## Output
 
@@ -48,6 +48,55 @@ Expert puzzles may take slightly longer to generate (up to ~1s on slow devices) 
 - Show a spinner or "Generating…" indicator while the puzzle is being produced
 - For Expert difficulty, show a note: "Expert puzzles may take a moment to generate."
 - Consider running generation in a **Web Worker** to avoid blocking the UI thread — especially for Hard and Expert difficulties
+
+## PDF Export
+
+### User controls
+
+| Control | Options | Default |
+|---|---|---|
+| Difficulty | Easy / Medium / Hard / Expert | Same as current page difficulty |
+| Number of puzzles | 1 – 10 | 4 |
+
+The max is capped at **10 puzzles** to keep generation and file size reasonable.
+
+### PDF layout
+
+- **Page size**: A4 portrait (210 × 297 mm)
+- **Puzzles per page**: 2 (one in the top half, one in the bottom half)
+- **Total puzzle pages**: ceil(N / 2) — so 10 puzzles = 5 pages
+- **Solutions page**: a final page listing all solutions in a compact 3-column grid layout, numbered to match the puzzles
+- **Each puzzle block contains**:
+  - A label: `Puzzle 1 — Medium` (difficulty + number)
+  - The 9×9 grid drawn with thin lines for cell borders and thick lines for 3×3 box borders
+  - Given digits printed in the cells; empty cells left blank
+- **File name**: `sudoku-{difficulty}-{count}puzzles.pdf` (e.g. `sudoku-medium-4puzzles.pdf`)
+
+### Implementation approach
+
+Use **`jsPDF`** to draw grids programmatically:
+
+1. Generate N puzzles using `generatePuzzle(difficulty)` in sequence
+2. For each puzzle, draw:
+   - A label above the grid
+   - 9×9 cell lines (thin, gray)
+   - 3×3 box lines (thick, black)
+   - Given digits centred in their cells
+3. Append a solutions page with compact grids (all 9×9 digits, no empty cells)
+4. Call `jsPDF.save(filename)` to download
+
+> `jsPDF` is the only new dependency required — ~230 KB gzipped, well-maintained, safe for browser.
+
+### Loading / progress state
+
+- While generating and building the PDF, show a progress message: "Generating {N} puzzles…"
+- Disable the export button during generation
+- On completion, the browser triggers the download automatically
+
+### Error handling
+
+- If any puzzle fails to generate within the timeout, show: "Could not generate all puzzles. Try a lower difficulty or fewer puzzles."
+- The button re-enables so the user can retry
 
 ## Error Handling
 
@@ -65,7 +114,12 @@ Expert puzzles may take slightly longer to generate (up to ~1s on slow devices) 
 - Generated puzzle grid centred below
 - Difficulty badge + given count below the grid
 - Puzzle string textarea + Copy as string / Copy as grid buttons
-- Play and Solve action buttons at the bottom
+- Play and Solve action buttons
+- **PDF Export section** (below the main puzzle):
+  - Heading: "Export puzzles as PDF"
+  - Difficulty pill selector (defaults to current difficulty)
+  - Quantity stepper / selector: 1–10 puzzles (default 4)
+  - "Download PDF" button — shows a spinner and progress text while generating
 
 ## Privacy
 
@@ -84,6 +138,7 @@ description: 'Generate valid, uniquely-solvable Sudoku puzzles at any difficulty
   - `GeneratedPuzzle`: `{ puzzle: Board, solution: Board, givens: number, difficulty: Difficulty }`
 - `utils/sudokuSolver.ts` — used internally to verify unique-solution property during cell removal
 - `utils/sudokuHelpers.ts` — shared types, string ↔ board conversion, ASCII grid formatter
+- `jsPDF` (npm: `jspdf`) — client-side PDF generation for the export feature
 
 ## Shared Utility Design (`utils/sudokuHelpers.ts`)
 
@@ -116,3 +171,4 @@ function isBoardComplete(board: Board): boolean     // all cells filled + valid
 - `getConflicts` returns true when a digit appears twice in the same column
 - `getConflicts` returns true when a digit appears twice in the same 3×3 box
 - `getConflicts` returns false for a valid placement
+- PDF export: generating N puzzles produces N valid puzzles before PDF creation (unit-testable; actual PDF rendering is browser-only and not unit tested)
