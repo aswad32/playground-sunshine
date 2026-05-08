@@ -59,6 +59,14 @@ const tools: Tool[] = [
     category: 'Formatters',
   },
   {
+    name: 'HTML Entity Encoder / Decoder',
+    route: '/tools/html-entity-encoder',
+    description: 'Encode special characters to HTML entities or decode them back to plain text — directly in your browser.',
+    tags: ['html', 'entity', 'encoder', 'decoder', 'escape'],
+    icon: 'Code',
+    category: 'Encoders & Decoders',
+  },
+  {
     name: 'Base64 Encoder / Decoder',
     route: '/tools/base64',
     description: 'Encode text to Base64 or decode Base64 back to plain text directly in your browser.',
