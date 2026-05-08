@@ -104,6 +104,35 @@ When generating code, prefer this stack unless existing project files show other
 
 ---
 
+## Mandatory Workflow — Issue First
+
+**Every code change requires a GitHub issue before any branch or file is touched.**
+
+```
+gh issue create → git checkout develop && git pull origin develop → git checkout -b feature/<issue-number>-short-description → implement → commit → git push → gh pr create --base develop
+```
+
+Always pull the latest `develop` from remote before branching. This ensures you build on top of all merged work from other team members and avoids unnecessary merge conflicts.
+
+Full steps: see [`specs/contributing.md`](../specs/contributing.md).
+
+- Branch naming: `feature/<issue-number>-<short-kebab-description>`
+- Commit message: `feat: description (#N)` with `Closes #N` in the body
+- PRs always target `develop`, never `main`
+- Labels: `enhancement`, `bug`, `documentation`, `other`
+
+### Pre-implementation checklist — MUST be satisfied before touching any file
+
+Before using any file creation or editing tool, all three of these steps MUST already be complete:
+
+1. **Issue created** — a GitHub issue exists and you have its number `#N`
+2. **Branch synced** — `git checkout develop && git pull origin develop` has been run
+3. **Feature branch active** — `git checkout -b feature/<N>-description` has been run and confirmed
+
+Do not create, edit, or delete any file until all three are done. If the user asks you to implement something and these steps are not yet complete, perform them first — in order — before writing a single line of code.
+
+---
+
 ## Directory Structure & Naming Conventions
 
 ```
