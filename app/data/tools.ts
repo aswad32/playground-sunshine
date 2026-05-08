@@ -187,6 +187,14 @@ const tools: Tool[] = [
     category: 'Text & Code',
   },
   {
+    name: 'CSV ↔ JSON Converter',
+    route: '/tools/csv-json-converter',
+    description: 'Convert CSV to JSON or JSON to CSV directly in your browser. Handles quoted fields, commas inside values, and complex structures.',
+    tags: ['csv', 'json', 'converter', 'data', 'table'],
+    icon: 'ArrowLeftRight',
+    category: 'Text & Code',
+  },
+  {
     name: 'Image Compressor / Resizer',
     route: '/tools/image-compressor',
     description: 'Compress and resize JPEG, PNG, and WebP images in your browser. See before/after file size — no server upload.',
