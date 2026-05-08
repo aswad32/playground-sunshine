@@ -107,6 +107,14 @@ const tools: Tool[] = [
     category: 'Generators',
   },
   {
+    name: 'Password Generator',
+    route: '/tools/password-generator',
+    description: 'Generate strong, random passwords with configurable length and character sets — using your browser’s secure crypto API.',
+    tags: ['password', 'generator', 'security', 'crypto'],
+    icon: 'ShieldCheck',
+    category: 'Generators',
+  },
+  {
     name: 'Hash Generator',
     route: '/tools/hash-generator',
     description: 'Generate MD5, SHA-1, SHA-256, and SHA-512 hashes from text or files directly in your browser.',
