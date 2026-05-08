@@ -8,6 +8,14 @@ export interface EnvResult {
   warnings: EnvWarning[]
 }
 
+export type ConvertTarget = 'env' | 'json' | 'docker' | 'github-actions' | 'env-example'
+
+export interface CompareResult {
+  missing: string[]   // in .env.example but not in .env
+  extra: string[]     // in .env but not in .env.example
+  matching: string[]  // in both
+}
+
 type LineData =
   | { type: 'blank' }
   | { type: 'comment'; raw: string }
@@ -83,4 +91,83 @@ export function formatEnv(input: string, sortAlpha = false): EnvResult {
   }
 
   return { output: lineData.map(serializeLine).join('\n'), warnings }
+}
+
+/** Strip surrounding single or double quotes from a value string. */
+function unquote(value: string): string {
+  if (
+    (value.startsWith('"') && value.endsWith('"')) ||
+    (value.startsWith("'") && value.endsWith("'"))
+  ) {
+    return value.slice(1, -1)
+  }
+  return value
+}
+
+/** Parse an env string into an ordered list of kv pairs (comments/blanks excluded). */
+function extractKvPairs(input: string): { key: string; value: string }[] {
+  return input
+    .trim()
+    .split('\n')
+    .map((l) => parseLine(l))
+    .filter((l): l is Extract<LineData, { type: 'kv' }> => l.type === 'kv')
+}
+
+export function convertEnv(input: string, target: ConvertTarget, sortAlpha = false): EnvResult {
+  if (target === 'env') return formatEnv(input, sortAlpha)
+
+  const trimmed = input.trim()
+  if (!trimmed) return { output: '', warnings: [] }
+
+  const { warnings } = formatEnv(trimmed)
+  let pairs = extractKvPairs(trimmed)
+
+  if (sortAlpha) {
+    pairs = [...pairs].sort((a, b) => a.key.localeCompare(b.key))
+  }
+
+  if (target === 'json') {
+    const obj: Record<string, string> = {}
+    for (const { key, value } of pairs) obj[key] = unquote(value)
+    return { output: JSON.stringify(obj, null, 2), warnings }
+  }
+
+  if (target === 'docker') {
+    const lines = ['environment:']
+    for (const { key, value } of pairs) lines.push(`  - ${key}=${unquote(value)}`)
+    return { output: lines.join('\n'), warnings }
+  }
+
+  if (target === 'github-actions') {
+    const lines = ['env:']
+    for (const { key, value } of pairs) {
+      const raw = unquote(value)
+      const needsQuotes = raw.includes(':') || raw.includes('#') || raw !== raw.trim()
+      lines.push(`  ${key}: ${needsQuotes ? `"${raw}"` : raw}`)
+    }
+    return { output: lines.join('\n'), warnings }
+  }
+
+  if (target === 'env-example') {
+    const rawLines = trimmed.split('\n')
+    const result = rawLines.map((l) => {
+      const parsed = parseLine(l)
+      if (parsed.type === 'kv') return `${parsed.key}=`
+      return serializeLine(parsed)
+    })
+    return { output: result.join('\n'), warnings }
+  }
+
+  return { output: '', warnings }
+}
+
+export function compareEnv(envInput: string, exampleInput: string): CompareResult {
+  const envKeys = new Set(extractKvPairs(envInput).map((p) => p.key))
+  const exampleKeys = new Set(extractKvPairs(exampleInput).map((p) => p.key))
+
+  const missing = [...exampleKeys].filter((k) => !envKeys.has(k))
+  const extra = [...envKeys].filter((k) => !exampleKeys.has(k))
+  const matching = [...envKeys].filter((k) => exampleKeys.has(k))
+
+  return { missing, extra, matching }
 }

@@ -24,6 +24,8 @@ A collection of fast, free, privacy-friendly tools for developers and everyday u
 | [JSON Formatter / Validator](/tools/json-formatter) | Format, validate, and minify JSON |
 | [SQL Formatter](/tools/sql-formatter) | Beautify SQL with dialect support (MySQL, PostgreSQL, SQLite, T-SQL) |
 | [Markdown Previewer](/tools/markdown-previewer) | Live Markdown → HTML preview with copy buttons |
+| [YAML Formatter / Validator](/tools/yaml-formatter) | Format and validate YAML with error highlighting |
+| [.env File Formatter](/tools/env-formatter) | Parse, sort, and clean up .env files |
 
 ### Encoders & Decoders
 | Tool | Description |
@@ -31,6 +33,8 @@ A collection of fast, free, privacy-friendly tools for developers and everyday u
 | [Base64 Encoder / Decoder](/tools/base64) | Encode text to Base64 or decode it back |
 | [URL Encoder / Decoder](/tools/url-encoder-decoder) | Percent-encode and decode URLs |
 | [JWT Decoder](/tools/jwt-decoder) | Decode JWT header and payload without sending the token anywhere |
+| [HTML Entity Encoder / Decoder](/tools/html-entity-encoder) | Encode special characters to HTML entities and back |
+| [Number Base Converter](/tools/number-base-converter) | Convert numbers between binary, octal, decimal, and hexadecimal |
 
 ### Generators
 | Tool | Description |
@@ -39,6 +43,7 @@ A collection of fast, free, privacy-friendly tools for developers and everyday u
 | [Hash Generator](/tools/hash-generator) | MD5, SHA-1, SHA-256, SHA-512 hashes from text or files |
 | [Fake Data Generator](/tools/fake-data-generator) | Realistic fake names, emails, addresses — JSON, CSV, or plain list |
 | [QR Code Generator](/tools/qr-code-generator) | Turn any text or URL into a downloadable QR code |
+| [Password Generator](/tools/password-generator) | Generate strong random passwords with configurable rules |
 
 ### Date & Time
 | Tool | Description |
@@ -51,28 +56,20 @@ A collection of fast, free, privacy-friendly tools for developers and everyday u
 |---|---|
 | [Regex Tester](/tools/regex-tester) | Test regex patterns with live match highlighting and capture groups |
 | [Text Diff Checker](/tools/text-diff-checker) | Compare two blocks of text line by line |
+| [String Case Converter](/tools/string-case-converter) | Convert text between camelCase, snake_case, PascalCase, and more |
+| [Word & Character Counter](/tools/word-counter) | Count words, characters, sentences, and reading time |
+| [CSV ↔ JSON Converter](/tools/csv-json-converter) | Convert CSV to JSON and JSON to CSV instantly |
 
 ### Images
 | Tool | Description |
 |---|---|
 | [Image Compressor / Resizer](/tools/image-compressor) | Compress and resize JPEG, PNG, and WebP images with before/after size |
 
----
-
-## Coming Soon
-
-The following tools have specs written and are ready to build:
-
-- YAML Formatter / Validator
-- .env File Formatter
-- HTML Entity Encoder / Decoder
-- Number Base Converter
-- Password Generator
-- String Case Converter
-- Word & Character Counter
-- CSV ↔ JSON Converter
-- Color Picker & Converter
-- Contrast Checker (WCAG AA/AAA)
+### Colors
+| Tool | Description |
+|---|---|
+| [Color Picker & Converter](/tools/color-converter) | Convert colors between HEX, RGB, HSL, and HSB |
+| [Contrast Checker](/tools/contrast-checker) | Check WCAG AA and AAA color contrast ratios for accessible design |
 
 ---
 

@@ -37,8 +37,8 @@ const tools: Tool[] = [
   {
     name: '.env Formatter',
     route: '/tools/env-formatter',
-    description: 'Clean up .env files, trim whitespace, detect duplicate keys, and sort alphabetically — right in your browser.',
-    tags: ['env', 'dotenv', 'formatter', 'validator', 'secrets'],
+    description: 'Format, convert, and compare .env files. Export to JSON, Docker Compose, or GitHub Actions YAML. Generate .env.example in one click.',
+    tags: ['env', 'dotenv', 'formatter', 'validator', 'secrets', 'json', 'docker', 'github-actions'],
     icon: 'FileKey',
     category: 'Formatters',
   },

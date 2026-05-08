@@ -25,9 +25,6 @@ Tools:
 - [SQL Formatter](../docs/specs/sql-formatter.md)
 - [Image Compressor / Resizer](../docs/specs/image-compressor.md)
 - [Text Diff Checker](../docs/specs/text-diff-checker.md)
-
-**Planned (spec ready, not yet built):**
-
 - [YAML Formatter / Validator](../docs/specs/yaml-formatter.md)
 - [.env File Formatter](../docs/specs/env-formatter.md)
 - [HTML Entity Encoder / Decoder](../docs/specs/html-entity-encoder.md)
@@ -38,6 +35,10 @@ Tools:
 - [CSV ↔ JSON Converter](../docs/specs/csv-json-converter.md)
 - [Color Picker & Converter](../docs/specs/color-converter.md)
 - [Contrast Checker](../docs/specs/contrast-checker.md)
+
+**Planned (spec ready, not yet built):**
+
+None — all planned tools have been built.
 
 The project should feel like a clean developer playground: simple, bright, fast, and trustworthy.
 
