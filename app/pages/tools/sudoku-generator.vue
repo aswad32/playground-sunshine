@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import { boardToString, type Difficulty } from '~/utils/sudokuHelpers'
 import { generatePuzzle, type GeneratedPuzzle } from '~/utils/sudokuGenerator'
+import { exportSudokuPdf } from '~/utils/sudokuPdf'
 
 useSeoMeta({
   title: 'Sudoku Generator - Playground Sunshine',
@@ -69,6 +70,32 @@ const difficultyColors: Record<Difficulty, string> = {
 }
 
 const { copy, copied } = useClipboard()
+
+// ── PDF export state ───────────────────────────────────────────────────────
+const pdfDifficulty = ref<Difficulty>('medium')
+const pdfCount = ref(4)
+const pdfExporting = ref(false)
+const pdfProgress = ref(0)
+const pdfError = ref<string | null>(null)
+const PDF_MAX = 10
+
+watch(selectedDifficulty, (d) => { pdfDifficulty.value = d })
+
+async function downloadPdf() {
+  pdfError.value = null
+  pdfExporting.value = true
+  pdfProgress.value = 0
+  try {
+    await exportSudokuPdf(pdfDifficulty.value, pdfCount.value, (done) => {
+      pdfProgress.value = done
+    })
+  } catch {
+    pdfError.value = 'Could not generate all puzzles. Try a lower difficulty or fewer puzzles.'
+  } finally {
+    pdfExporting.value = false
+    pdfProgress.value = 0
+  }
+}
 </script>
 
 <template>
@@ -180,6 +207,78 @@ const { copy, copied } = useClipboard()
           <p class="text-xs text-gray-400">81-character string — 0s are empty cells</p>
         </div>
       </div>
+    </div>
+
+    <!-- PDF Export section -->
+    <div class="mt-10 border-t border-gray-100 pt-8">
+      <h2 class="text-base font-semibold text-gray-800 mb-1">Export puzzles as PDF</h2>
+      <p class="text-sm text-gray-400 mb-5">
+        Generate multiple puzzles and download them as a printable A4 PDF. A solutions page is included at the end.
+      </p>
+
+      <div class="flex flex-wrap items-end gap-5">
+        <!-- Difficulty -->
+        <div class="space-y-1.5">
+          <label class="text-xs font-medium text-gray-500 uppercase tracking-wide">Difficulty</label>
+          <div class="flex gap-1.5">
+            <button
+              v-for="d in difficulties"
+              :key="d"
+              :class="[
+                'px-3 py-1.5 rounded-full border text-xs font-medium capitalize transition-colors',
+                pdfDifficulty === d
+                  ? difficultyColors[d]
+                  : 'border-gray-200 text-gray-400 hover:bg-gray-50',
+              ]"
+              @click="pdfDifficulty = d"
+            >
+              {{ d }}
+            </button>
+          </div>
+        </div>
+
+        <!-- Count -->
+        <div class="space-y-1.5">
+          <label class="text-xs font-medium text-gray-500 uppercase tracking-wide">
+            Number of puzzles
+            <span class="normal-case text-gray-400">(max {{ PDF_MAX }})</span>
+          </label>
+          <div class="flex items-center gap-2">
+            <button
+              :disabled="pdfCount <= 1 || pdfExporting"
+              class="w-8 h-8 rounded-lg border border-gray-200 text-lg font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-30 transition-colors"
+              @click="pdfCount = Math.max(1, pdfCount - 1)"
+            >−</button>
+            <span class="w-6 text-center text-sm font-semibold text-gray-800 tabular-nums">{{ pdfCount }}</span>
+            <button
+              :disabled="pdfCount >= PDF_MAX || pdfExporting"
+              class="w-8 h-8 rounded-lg border border-gray-200 text-lg font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-30 transition-colors"
+              @click="pdfCount = Math.min(PDF_MAX, pdfCount + 1)"
+            >+</button>
+          </div>
+        </div>
+
+        <!-- Download button -->
+        <button
+          :disabled="pdfExporting"
+          class="rounded-lg bg-gray-900 px-5 py-2 text-sm font-medium text-white hover:bg-gray-700 transition-colors disabled:opacity-40 disabled:cursor-wait"
+          @click="downloadPdf"
+        >
+          <span v-if="pdfExporting">
+            Generating {{ pdfProgress }}&thinsp;/&thinsp;{{ pdfCount }}…
+          </span>
+          <span v-else>Download PDF</span>
+        </button>
+      </div>
+
+      <!-- Error -->
+      <p
+        v-if="pdfError"
+        role="alert"
+        class="mt-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2"
+      >
+        {{ pdfError }}
+      </p>
     </div>
   </main>
 </template>
