@@ -20,6 +20,14 @@ const groups = computed(() =>
     .filter((g) => g.tools.length > 0),
 )
 
+function catToId(category: string): string {
+  return category.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
+}
+
+function scrollTo(category: string) {
+  document.getElementById(catToId(category))?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
+
 useSeoMeta({
   title: 'Playground Sunshine — Free Developer Tools',
   description: 'A collection of fast, free, privacy-friendly tools for developers. No login required.',
@@ -28,7 +36,7 @@ useSeoMeta({
 
 <template>
   <main class="max-w-5xl mx-auto px-4 py-12">
-    <header class="mb-12 text-center">
+    <header class="mb-8 text-center">
       <h1 class="text-4xl font-bold text-gray-900 mb-3">
         Playground Sunshine ☀️
       </h1>
@@ -37,8 +45,23 @@ useSeoMeta({
       </p>
     </header>
 
+    <!-- Category pills -->
+    <nav aria-label="Jump to category" class="mb-10 -mx-4 px-4 overflow-x-auto">
+      <ul class="flex gap-2 w-max mx-auto">
+        <li v-for="group in groups" :key="group.category">
+          <button
+            type="button"
+            class="whitespace-nowrap rounded-full border border-gray-200 px-4 py-1.5 text-sm font-medium text-gray-600 hover:border-yellow-400 hover:text-yellow-600 hover:bg-yellow-50 transition-colors"
+            @click="scrollTo(group.category)"
+          >
+            {{ group.category }}
+          </button>
+        </li>
+      </ul>
+    </nav>
+
     <div v-if="groups.length > 0" class="space-y-10">
-      <section v-for="group in groups" :key="group.category">
+      <section v-for="group in groups" :key="group.category" :id="catToId(group.category)" class="scroll-mt-6">
         <h2 class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-4">
           {{ group.category }}
         </h2>
