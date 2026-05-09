@@ -283,10 +283,7 @@ const hasToon = computed(() => toonText.value.trim().length > 0)
     <section class="mt-12 rounded-xl border border-gray-100 bg-gray-50 px-6 py-5 max-w-3xl">
       <h2 class="text-sm font-semibold text-gray-700 mb-2">What is TOON?</h2>
       <p class="text-sm text-gray-500 leading-relaxed">
-        TOON (Token-Oriented Object Notation) is a compact, lossless encoding of the JSON data model.
-        It uses YAML-style indentation for nested objects and CSV-style tabular rows for uniform arrays —
-        achieving up to 60% fewer characters than formatted JSON. It's designed as a drop-in replacement
-        for JSON in LLM prompts, reducing token costs while keeping structure clear for models to follow.
+        TOON (Token‑Oriented Object Notation) is a compact, human‑readable encoding of the JSON data model. It uses YAML-style indentation for nested objects and CSV-style rows for uniform arrays. When applied to large, repetitive data sets—especially lists of similar objects—TOON can significantly reduce the number of characters compared to formatted JSON, although actual savings vary depending on the structure of the data. It is designed as a drop‑in alternative to JSON for LLM prompts, keeping the structure clear for models to follow while helping to shorten prompt length and reduce token usage.
         Learn more at the
         <a
           href="https://github.com/toon-format/toon"
