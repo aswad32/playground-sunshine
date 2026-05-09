@@ -39,6 +39,7 @@ const ROUTES = [
   '/tools/sudoku-player',
   '/tools/sudoku-generator',
   '/tools/sudoku-solver',
+  '/tools/cidr-calculator',
 ]
 
 let passed = 0
