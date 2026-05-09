@@ -197,6 +197,14 @@ const tools: Tool[] = [
     category: 'Text & Code',
   },
   {
+    name: 'JSON ↔ TOON Converter',
+    route: '/tools/json-toon-converter',
+    description: 'Convert JSON to TOON (Token-Oriented Object Notation) and back — reduce LLM prompt token costs with this compact, lossless format.',
+    tags: ['toon', 'json', 'converter', 'llm', 'token', 'ai'],
+    icon: 'Sparkles',
+    category: 'Text & Code',
+  },
+  {
     name: 'Image Compressor / Resizer',
     route: '/tools/image-compressor',
     description: 'Compress and resize JPEG, PNG, and WebP images in your browser. See before/after file size — no server upload.',
