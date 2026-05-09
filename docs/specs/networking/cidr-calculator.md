@@ -62,6 +62,7 @@ All fields are read-only, displayed in a clean info grid (2-column on desktop, s
 | **Usable Hosts** | `254` |
 | **Total Addresses** | `256` |
 | **IP Class** | `C` |
+| **Address Type** | `Private` |
 | **Binary Subnet Mask** | `11111111.11111111.11111111.00000000` |
 
 Each row has a **Copy** button for its value.
@@ -77,15 +78,29 @@ Each row has a **Copy** button for its value.
 | `240.0.0.0` – `255.255.255.255` | E (Reserved) |
 | `127.x.x.x` | Loopback |
 
-### Special network notes
+### Address Type detection
 
-Display a subtle badge/note for well-known ranges:
+A single label describing the character of the address, checked in priority order:
 
-- `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16` → **Private (RFC 1918)**
-- `127.0.0.0/8` → **Loopback**
-- `169.254.0.0/16` → **Link-local (APIPA)**
-- `0.0.0.0/0` → **Default route**
-- `255.255.255.255/32` → **Limited broadcast**
+| Range | Address Type |
+|---|---|
+| `0.0.0.0/0` (exact) | Default route |
+| `0.0.0.0/8` | Unspecified |
+| `10.0.0.0/8` | Private |
+| `100.64.0.0/10` | Carrier-grade NAT |
+| `127.0.0.0/8` | Loopback |
+| `169.254.0.0/16` | Link-local |
+| `172.16.0.0/12` | Private |
+| `192.0.0.0/24` | IETF Protocol |
+| `192.0.2.0/24` | Documentation / Test-Net-1 |
+| `192.168.0.0/16` | Private |
+| `198.18.0.0/15` | Carrier-grade NAT |
+| `198.51.100.0/24` | Documentation / Test-Net-2 |
+| `203.0.113.0/24` | Documentation / Test-Net-3 |
+| `224.0.0.0/4` | Multicast |
+| `240.0.0.0/4` | Reserved |
+| `255.255.255.255/32` | Limited broadcast |
+| *(everything else)* | Public |
 
 ---
 
@@ -121,6 +136,20 @@ This tool performs all calculations in the browser. No IP addresses are sent to 
 Pure functions, no Vue reactivity.
 
 ```ts
+type AddressType =
+  | 'Private'
+  | 'Public'
+  | 'Loopback'
+  | 'Link-local'
+  | 'Multicast'
+  | 'Reserved'
+  | 'Limited broadcast'
+  | 'Default route'
+  | 'Documentation / Test-Net'
+  | 'Carrier-grade NAT'
+  | 'Unspecified'
+  | 'IETF Protocol'
+
 interface CidrResult {
   cidr: string
   networkAddress: string
@@ -132,9 +161,8 @@ interface CidrResult {
   usableHosts: number
   totalAddresses: number
   ipClass: string
+  addressType: AddressType
   binaryMask: string
-  isPrivate: boolean
-  specialNote: string | null
 }
 
 function parseCidr(input: string): CidrResult   // "192.168.1.0/24"
@@ -144,6 +172,7 @@ function intToIp(n: number): string
 function maskToCidr(mask: string): number        // "255.255.255.0" → 24
 function cidrToMask(prefix: number): string      // 24 → "255.255.255.0"
 function maskToBinary(mask: string): string      // "255.255.255.0" → "11111111.11111111.11111111.00000000"
+function getAddressType(ip: string): AddressType
 ```
 
 ---
@@ -160,7 +189,15 @@ function maskToBinary(mask: string): string      // "255.255.255.0" → "1111111
 - `maskToBinary('255.255.255.0')` returns `'11111111.11111111.11111111.00000000'`
 - Invalid CIDR throws or returns null
 - `parseIpMask('192.168.1.0', '255.255.255.0')` matches `parseCidr('192.168.1.0/24')`
-- Special note detected for private, loopback, link-local ranges
+- `getAddressType('192.168.1.0')` returns `'Private'`
+- `getAddressType('8.8.8.8')` returns `'Public'`
+- `getAddressType('127.0.0.1')` returns `'Loopback'`
+- `getAddressType('169.254.0.1')` returns `'Link-local'`
+- `getAddressType('224.0.0.1')` returns `'Multicast'`
+- `getAddressType('100.64.0.1')` returns `'Carrier-grade NAT'`
+- `getAddressType('192.0.2.1')` returns `'Documentation / Test-Net'`
+- `getAddressType('255.255.255.255')` returns `'Limited broadcast'`
+- `getAddressType('0.0.0.0')` returns `'Default route'`
 
 ---
 
@@ -182,7 +219,7 @@ useSeoMeta({
 - [ ] Copy button per row + Copy All
 - [ ] Clear/reset
 - [ ] Handles edge cases: /0, /31, /32
-- [ ] Detects private / special ranges
+- [ ] Address Type shown for all 12 defined types
 - [ ] Shows IP class
 - [ ] Validation messages are human-readable
 - [ ] No IP data sent to server
