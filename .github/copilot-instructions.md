@@ -109,7 +109,7 @@ When generating code, prefer this stack unless existing project files show other
 **Every code change requires a GitHub issue before any branch or file is touched.**
 
 ```
-gh issue create → git checkout develop && git pull origin develop → git checkout -b feature/<issue-number>-short-description → implement → commit → git push → gh pr create --base develop
+gh issue create → git checkout develop && git pull origin develop → git checkout -b feature/<issue-number>-short-description → implement → commit → git push → gh pr create --base develop → merge PR on GitHub → git checkout develop && git pull origin main && git push origin develop
 ```
 
 Always pull the latest `develop` from remote before branching. This ensures you build on top of all merged work from other team members and avoids unnecessary merge conflicts.
@@ -130,6 +130,14 @@ Before using any file creation or editing tool, all three of these steps MUST al
 3. **Feature branch active** — `git checkout -b feature/<N>-description` has been run and confirmed
 
 Do not create, edit, or delete any file until all three are done. If the user asks you to implement something and these steps are not yet complete, perform them first — in order — before writing a single line of code.
+
+### Post-merge sync — MUST be done after every PR is merged into main
+
+After merging a PR on GitHub, always sync `develop` back from `main` to bring in the merge commit. Skipping this causes the "X commit(s) behind main" message on every future branch.
+
+```bash
+git checkout develop && git pull origin main && git push origin develop
+```
 
 ---
 
