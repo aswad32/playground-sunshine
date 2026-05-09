@@ -167,7 +167,7 @@ interface CidrResult {
 
 function parseCidr(input: string): CidrResult   // "192.168.1.0/24"
 function parseIpMask(ip: string, mask: string): CidrResult
-function ipToInt(ip: string): number
+function ipToInt(ip: string): number             // must return unsigned 32-bit int — see note below
 function intToIp(n: number): string
 function maskToCidr(mask: string): number        // "255.255.255.0" → 24
 function cidrToMask(prefix: number): string      // 24 → "255.255.255.0"
@@ -175,11 +175,43 @@ function maskToBinary(mask: string): string      // "255.255.255.0" → "1111111
 function getAddressType(ip: string): AddressType
 ```
 
+### Implementation note — unsigned-safe IPv4 math
+
+JavaScript bitwise operators work on **signed 32-bit integers**. Shifting a high-octet IP like `192.x.x.x` sets bit 31, which makes the result negative:
+
+```ts
+// WRONG — returns a negative number for IPs ≥ 128.x.x.x
+(192 << 24) // -1073741824
+
+// CORRECT — force unsigned interpretation with >>> 0
+(192 << 24) >>> 0 // 3221225472
+```
+
+All bitwise operations in `ipToInt`, `cidrToMask`, and any masking arithmetic **must** apply `>>> 0` to force an unsigned result. Functions must never return a negative integer for a valid IPv4 address.
+
+```ts
+// Reference implementations
+function ipToInt(ip: string): number {
+  return ip.split('.').reduce((acc, octet) => ((acc << 8) | Number(octet)) >>> 0, 0)
+}
+
+function intToIp(n: number): string {
+  return [
+    (n >>> 24) & 0xff,
+    (n >>> 16) & 0xff,
+    (n >>> 8)  & 0xff,
+    n          & 0xff,
+  ].join('.')
+}
+```
+```
+
 ---
 
 ## Tests (`tests/cidrCalculator.test.ts`)
 
 - `parseCidr('192.168.1.0/24')` returns correct network, broadcast, hosts, mask
+- `ipToInt('192.168.1.0')` returns `3232235776` (not a negative number)
 - `parseCidr('10.0.0.1/8')` normalises to `10.0.0.0`, returns class A, private
 - `parseCidr('0.0.0.0/0')` handles default route (0 usable hosts edge case)
 - `parseCidr('192.168.1.1/32')` handles /32 (single host: 1 total, 0 usable)
