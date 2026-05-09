@@ -16,6 +16,7 @@ export const CATEGORY_ORDER: string[] = [
   'Images',
   'Colors',
   'Games & Puzzles',
+  'Networking',
 ]
 
 const tools: Tool[] = [
@@ -242,6 +243,14 @@ const tools: Tool[] = [
     tags: ['sudoku', 'solver', 'puzzle', 'logic'],
     icon: 'Gamepad2',
     category: 'Games & Puzzles',
+  },
+  {
+    name: 'CIDR Calculator',
+    route: '/tools/cidr-calculator',
+    description: 'Calculate network address, broadcast, usable hosts, subnet mask, and more from any IPv4 CIDR block — directly in your browser.',
+    tags: ['cidr', 'networking', 'subnet', 'ip', 'calculator'],
+    icon: 'Network',
+    category: 'Networking',
   },
 ]
 
