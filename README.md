@@ -59,6 +59,7 @@ A collection of fast, free, privacy-friendly tools for developers and everyday u
 | [String Case Converter](/tools/string-case-converter) | Convert text between camelCase, snake_case, PascalCase, and more |
 | [Word & Character Counter](/tools/word-counter) | Count words, characters, sentences, and reading time |
 | [CSV ↔ JSON Converter](/tools/csv-json-converter) | Convert CSV to JSON and JSON to CSV instantly |
+| [JSON ↔ TOON Converter](/tools/json-toon-converter) | Convert between JSON and the TOON human-readable data format |
 
 ### Images
 | Tool | Description |
@@ -77,6 +78,9 @@ A collection of fast, free, privacy-friendly tools for developers and everyday u
 | [Sudoku Player](/tools/sudoku-player) | Play Sudoku in your browser — conflict highlighting, pencil marks, timer, and undo |
 | [Sudoku Generator](/tools/sudoku-generator) | Generate unique-solution puzzles at Easy / Medium / Hard / Expert difficulty |
 | [Sudoku Solver](/tools/sudoku-solver) | Paste an 81-char string or enter manually, solve instantly, detect no-solution or multi-solution puzzles |
+| [Minesweeper](/tools/minesweeper) | Classic Minesweeper with three difficulty presets and a custom grid mode |
+| [Wordle Clone](/tools/wordle) | Guess the 5-letter word in 6 tries — color-coded feedback and win/loss stats |
+| [Nonogram / Picross](/tools/nonogram) | Solve pixel-art logic puzzles with row and column clue guides |
 
 ---
 
@@ -88,6 +92,7 @@ A collection of fast, free, privacy-friendly tools for developers and everyday u
 - [Tailwind CSS](https://tailwindcss.com)
 - [Lucide Vue](https://lucide.dev) — icons
 - [Vitest](https://vitest.dev) — unit tests
+- [Playwright](https://playwright.dev) — end-to-end tests
 - [pnpm](https://pnpm.io) — package manager
 
 ---
@@ -115,12 +120,17 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 ## Running Tests
 
 ```bash
-# Run all tests once
+# Run unit tests once
 pnpm test
 
 # Watch mode
 pnpm test:watch
+
+# Run Playwright end-to-end tests
+pnpm test:e2e
 ```
+
+Playwright tests use Chromium and require the dev server. When running locally, the server is reused if already running. In CI, it starts automatically.
 
 ---
 
@@ -164,7 +174,9 @@ playground-sunshine/
 │   ├── text-code/
 │   ├── images/
 │   ├── colors/
-│   └── games-puzzles/
+│   ├── games-puzzles/
+│   └── contributing.md     # Full contribution workflow
+├── e2e/                    # Playwright end-to-end tests
 ├── tests/                  # Vitest unit tests (mirrors utils/)
 ├── public/                 # Static assets (favicon…)
 └── nuxt.config.ts
@@ -174,10 +186,14 @@ playground-sunshine/
 
 ## Contributing
 
-1. Fork the repo and create a branch from `develop`.
-2. Add your tool: utility function → page → tests → registry entry in `data/tools.ts`.
-3. Follow the conventions in [`.github/copilot-instructions.md`](.github/copilot-instructions.md).
-4. Open a pull request against `develop`.
+See [docs/specs/contributing.md](docs/specs/contributing.md) for the full step-by-step workflow.
+
+Quick summary:
+1. Create a GitHub issue first.
+2. Branch from `develop`: `git checkout -b feature/<N>-description`.
+3. Implement: utility function → page → tests → `data/tools.ts` entry.
+4. Run `pnpm test` and `pnpm test:e2e` — both must be green before committing.
+5. Open a pull request against `develop`.
 
 Keep changes focused — one tool per PR.
 
