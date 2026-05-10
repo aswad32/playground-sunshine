@@ -41,6 +41,7 @@ Text & Code:
 - [String Case Converter](../docs/specs/text-code/string-case-converter.md)
 - [Word & Character Counter](../docs/specs/text-code/word-counter.md)
 - [CSV ↔ JSON Converter](../docs/specs/text-code/csv-json-converter.md)
+- [JSON ↔ TOON Converter](../docs/specs/text-code/json-toon-converter.md)
 
 Images:
 - [Image Compressor / Resizer](../docs/specs/images/image-compressor.md)
