@@ -3,7 +3,7 @@ import {
   Braces, KeyRound, Binary, Fingerprint, Clock, Link, CalendarClock,
   Search, Hash, Database, QrCode, FileText, Table2, Image, GitCompare,
   AlignLeft, FileKey, Code, ShieldCheck, CaseSensitive, AlignJustify, ArrowLeftRight, Pipette, Contrast,
-  Grid3x3, LayoutGrid, Gamepad2, Network, Sparkles, Bomb,
+  Grid3x3, LayoutGrid, Gamepad2, Network, Sparkles, Bomb, Grip,
 } from 'lucide-vue-next'
 import tools, { CATEGORY_ORDER } from '~/data/tools'
 
@@ -11,7 +11,7 @@ const iconMap: Record<string, unknown> = {
   Braces, KeyRound, Binary, Fingerprint, Clock, Link, CalendarClock,
   Search, Hash, Database, QrCode, FileText, Table2, Image, GitCompare,
   AlignLeft, FileKey, Code, ShieldCheck, CaseSensitive, AlignJustify, ArrowLeftRight, Pipette, Contrast,
-  Grid3x3, LayoutGrid, Gamepad2, Network, Sparkles, Bomb,
+  Grid3x3, LayoutGrid, Gamepad2, Network, Sparkles, Bomb, Grip,
 }
 
 const groups = computed(() =>
