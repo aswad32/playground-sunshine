@@ -253,6 +253,14 @@ const tools: Tool[] = [
     category: 'Games & Puzzles',
   },
   {
+    name: 'Minesweeper',
+    route: '/tools/minesweeper',
+    description: 'Play Minesweeper in your browser. Choose a difficulty, reveal safe tiles, and avoid the mines — free and fully private.',
+    tags: ['minesweeper', 'game', 'puzzle', 'mine'],
+    icon: 'Bomb',
+    category: 'Games & Puzzles',
+  },
+  {
     name: 'CIDR Calculator',
     route: '/tools/cidr-calculator',
     description: 'Calculate network address, broadcast, usable hosts, subnet mask, and more from any IPv4 CIDR block — directly in your browser.',
