@@ -261,6 +261,14 @@ const tools: Tool[] = [
     category: 'Games & Puzzles',
   },
   {
+    name: 'Nonogram',
+    route: '/tools/nonogram',
+    description: 'Solve Nonogram / Picross puzzles in your browser. Fill the grid using row and column clues — free and fully private.',
+    tags: ['nonogram', 'picross', 'puzzle', 'game', 'logic'],
+    icon: 'Grip',
+    category: 'Games & Puzzles',
+  },
+  {
     name: 'CIDR Calculator',
     route: '/tools/cidr-calculator',
     description: 'Calculate network address, broadcast, usable hosts, subnet mask, and more from any IPv4 CIDR block — directly in your browser.',
