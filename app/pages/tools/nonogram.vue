@@ -148,6 +148,7 @@ function openPuzzle(puzzle: NonogramPuzzle) {
   if (saved && !isGridEmpty(saved)) {
     pendingProgress.value = saved
     resumePrompt.value = true
+    view.value = 'play'
     return
   }
 

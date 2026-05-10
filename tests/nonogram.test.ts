@@ -89,18 +89,23 @@ describe('checkLine', () => {
 describe('checkWin', () => {
   const solution = [[true, false], [false, true]]
 
-  it('returns true when player grid matches solution exactly', () => {
+  it('returns true when filled cells match and empty cells are null', () => {
+    const player = [[true, null], [null, true]]
+    expect(checkWin(player, solution)).toBe(true)
+  })
+
+  it('returns true when empty cells are explicitly marked false', () => {
     const player = [[true, false], [false, true]]
     expect(checkWin(player, solution)).toBe(true)
   })
 
   it('returns false when a cell differs', () => {
-    const player = [[true, true], [false, true]]
+    const player = [[true, true], [null, true]]
     expect(checkWin(player, solution)).toBe(false)
   })
 
-  it('returns false when unknowns remain', () => {
-    const player = [[true, null], [false, true]]
+  it('returns false when a filled cell is missing', () => {
+    const player = [[null, null], [null, true]]
     expect(checkWin(player, solution)).toBe(false)
   })
 })
