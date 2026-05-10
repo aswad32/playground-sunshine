@@ -1,8 +1,10 @@
+[![CI](https://github.com/aswad32/playground-sunshine/actions/workflows/ci.yml/badge.svg)](https://github.com/aswad32/playground-sunshine/actions/workflows/ci.yml)
+[![Release](https://github.com/aswad32/playground-sunshine/actions/workflows/release.yml/badge.svg)](https://github.com/aswad32/playground-sunshine/actions/workflows/release.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
+
 # Playground Sunshine ☀️
 
 A collection of fast, free, privacy-friendly tools for developers and everyday users. Everything runs directly in your browser — no login, no server, no tracking.
-
-[![License: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
 
 ---
 
