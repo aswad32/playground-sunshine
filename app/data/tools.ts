@@ -269,6 +269,14 @@ const tools: Tool[] = [
     category: 'Games & Puzzles',
   },
   {
+    name: 'Wordle Clone',
+    route: '/tools/wordle',
+    description: 'Play an unlimited Wordle-style word game. Guess the 5-letter word in 6 tries — random or daily mode.',
+    tags: ['wordle', 'word', 'game', 'puzzle', 'guess'],
+    icon: 'LetterText',
+    category: 'Games & Puzzles',
+  },
+  {
     name: 'CIDR Calculator',
     route: '/tools/cidr-calculator',
     description: 'Calculate network address, broadcast, usable hosts, subnet mask, and more from any IPv4 CIDR block — directly in your browser.',
