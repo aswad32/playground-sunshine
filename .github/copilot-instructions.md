@@ -54,13 +54,11 @@ Games & Puzzles:
 - [Sudoku Player](../docs/specs/games-puzzles/sudoku-player.md)
 - [Sudoku Generator](../docs/specs/games-puzzles/sudoku-generator.md)
 - [Sudoku Solver](../docs/specs/games-puzzles/sudoku-solver.md)
-
-**Planned (spec ready, not yet built):**
-
-Games & Puzzles:
 - [Minesweeper](../docs/specs/games-puzzles/minesweeper.md)
 - [Wordle Clone](../docs/specs/games-puzzles/wordle.md)
 - [Nonogram / Picross](../docs/specs/games-puzzles/nonogram.md)
+
+**Planned (spec ready, not yet built):**
 
 The project should feel like a clean developer playground: simple, bright, fast, and trustworthy.
 
@@ -134,6 +132,41 @@ Before using any file creation or editing tool, all three of these steps MUST al
 3. **Feature branch active** — `git checkout -b feature/<N>-description` has been run and confirmed
 
 Do not create, edit, or delete any file until all three are done. If the user asks you to implement something and these steps are not yet complete, perform them first — in order — before writing a single line of code.
+
+### Post-implementation checklist — MUST be verified before commit, push, or PR
+
+**Do not run `git commit`, `git push`, or `gh pr create` until every step below has been actively completed and verified.** This is a blocking gate, not a reminder list.
+
+#### Step 1 — Write tests (if applicable)
+- Add unit tests for all new utility functions in `tests/`
+- For complex tools with critical user flows, add Playwright end-to-end tests
+- Tests must cover edge cases and error paths, not just the happy path
+
+#### Step 2 — Run unit tests and confirm they pass
+```bash
+pnpm test
+```
+All tests must be green. If any test fails, fix it before proceeding. Do not commit with failing tests.
+
+#### Step 3 — Run Playwright tests and confirm they pass (if e2e tests exist or were added)
+```bash
+pnpm test:e2e
+```
+All Playwright tests must pass. If any fail, fix them before proceeding.
+
+#### Step 4 — Verify metadata and documentation
+- If a tool was added: confirm its entry exists in `app/data/tools.ts` with `name`, `route`, `description`, `tags`, `icon`, and `category`
+- If a tool was added: confirm its icon is in the `iconMap` in `app/pages/index.vue`
+- If a major tool was added: confirm the README has been updated
+
+#### Step 5 — Commit, push, and open PR
+Only after all steps above are complete:
+```bash
+git add <files>
+git commit -m "feat: description (#N)\n\nCloses #N"
+git push origin feature/<N>-description
+gh pr create --base develop --fill
+```
 
 ### Post-merge sync — MUST be done after every PR is merged into main
 

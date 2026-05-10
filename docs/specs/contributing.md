@@ -77,14 +77,26 @@ Follow the [project conventions](../../.github/copilot-instructions.md):
 
 ---
 
-### 5. Pre-push checklist
+### 5. Verify everything before committing
 
-Before committing, verify:
+**Do not run `git commit`, `git push`, or `gh pr create` until all of the following are confirmed.** This is a blocking gate.
 
-- [ ] `pnpm test` passes — all unit tests green
-- [ ] `pnpm test:e2e` passes — Playwright tests green (for complex tools)
-- [ ] Tool metadata added to `app/data/tools.ts` (if adding a tool)
+**Run unit tests — must be all green:**
+```bash
+pnpm test
+```
+
+**Run Playwright tests — must pass (if e2e tests exist or were added):**
+```bash
+pnpm test:e2e
+```
+
+**Verify metadata and docs:**
+- [ ] Tool entry added to `app/data/tools.ts` with `name`, `route`, `description`, `tags`, `icon`, `category` (if adding a tool)
 - [ ] Icon added to `iconMap` in `app/pages/index.vue` (if adding a new icon)
+- [ ] README updated (if adding a major tool)
+
+**Verify quality:**
 - [ ] Privacy note included on sensitive tools (JWT, Base64, Hash, .env, etc.)
 - [ ] SEO metadata added with `useSeoMeta`
 - [ ] No raw error stack traces shown to users
