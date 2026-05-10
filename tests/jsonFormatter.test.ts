@@ -80,8 +80,7 @@ describe('sortTopLevelKeys', () => {
   })
 })
 
-describe('formatJson with sortKeys option', () => {
-  it('sorts keys when sortKeys is true', () => {
+describe('formatJson with sortKeys option', () => {  it('sorts keys when sortKeys is true', () => {
     const { output, error } = formatJson('{"z":1,"a":2}', { sortKeys: true })
     expect(error).toBeNull()
     expect(Object.keys(JSON.parse(output))).toEqual(['a', 'z'])
@@ -97,5 +96,31 @@ describe('formatJson with sortKeys option', () => {
     const { output, error } = formatJson('[3,1,2]', { sortKeys: true })
     expect(error).toBeNull()
     expect(JSON.parse(output)).toEqual([3, 1, 2])
+  })
+})
+
+describe('formatJson relaxed JSON', () => {
+  it('formats JSON with unquoted keys', () => {
+    const { output, error } = formatJson('[{color: "red", value: "#f00"}]')
+    expect(error).toBeNull()
+    expect(JSON.parse(output)).toEqual([{ color: 'red', value: '#f00' }])
+  })
+
+  it('formats JSON with trailing commas', () => {
+    const { output, error } = formatJson('{"a":1,"b":2,}')
+    expect(error).toBeNull()
+    expect(JSON.parse(output)).toEqual({ a: 1, b: 2 })
+  })
+
+  it('formats JSON with unquoted keys and trailing commas together', () => {
+    const { output, error } = formatJson('{name: "Alice", age: 30,}')
+    expect(error).toBeNull()
+    expect(JSON.parse(output)).toEqual({ name: 'Alice', age: 30 })
+  })
+
+  it('still returns error for truly invalid JSON', () => {
+    const { output, error } = formatJson('{{{not valid at all}}}')
+    expect(output).toBe('')
+    expect(error).toContain('does not look like valid JSON')
   })
 })
