@@ -41,6 +41,7 @@ Text & Code:
 - [String Case Converter](../docs/specs/text-code/string-case-converter.md)
 - [Word & Character Counter](../docs/specs/text-code/word-counter.md)
 - [CSV ↔ JSON Converter](../docs/specs/text-code/csv-json-converter.md)
+- [JSON ↔ TOON Converter](../docs/specs/text-code/json-toon-converter.md)
 
 Images:
 - [Image Compressor / Resizer](../docs/specs/images/image-compressor.md)
@@ -56,7 +57,10 @@ Games & Puzzles:
 
 **Planned (spec ready, not yet built):**
 
-None — all planned tools have been built.
+Games & Puzzles:
+- [Minesweeper](../docs/specs/games-puzzles/minesweeper.md)
+- [Wordle Clone](../docs/specs/games-puzzles/wordle.md)
+- [Nonogram / Picross](../docs/specs/games-puzzles/nonogram.md)
 
 The project should feel like a clean developer playground: simple, bright, fast, and trustworthy.
 
@@ -197,7 +201,7 @@ playground-sunshine/
   - **Text & Code** — Regex Tester, Text Diff Checker, String Case Converter, Word & Character Counter, CSV ↔ JSON Converter
   - **Images** — Image Compressor / Resizer
   - **Colors** — Color Picker & Converter, Contrast Checker
-  - **Games & Puzzles** — Sudoku Player, Sudoku Generator, Sudoku Solver
+  - **Games & Puzzles** — Sudoku Player, Sudoku Generator, Sudoku Solver, Minesweeper, Wordle Clone, Nonogram / Picross
   When adding a new tool, pick the most fitting existing category or add a new entry to `CATEGORY_ORDER` if none fit.
 - `utils/` contains pure functions only — no Vue reactivity, directly testable with Vitest.
 - `components/ui/` holds shared primitives reused across tools; `components/tools/` holds tool-specific pieces.
