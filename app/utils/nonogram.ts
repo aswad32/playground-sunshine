@@ -121,7 +121,8 @@ export function checkWin(playerGrid: PlayerGrid, solution: boolean[][]): boolean
 
   for (let r = 0; r < height; r++) {
     for (let c = 0; c < width; c++) {
-      if (playerGrid[r]?.[c] !== solution[r]?.[c]) return false
+      // null means untouched (not filled); treat same as false for win check
+      if ((playerGrid[r]?.[c] === true) !== (solution[r]?.[c] ?? false)) return false
     }
   }
   return true
