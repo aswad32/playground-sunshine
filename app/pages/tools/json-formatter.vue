@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Download, FolderOpen } from 'lucide-vue-next'
 import { formatJson, minifyJson } from '~/utils/jsonFormatter'
+import { useJq } from '~/composables/useJq'
 
 useSeoMeta({
   title: 'JSON Formatter - Playground Sunshine',
@@ -11,8 +12,13 @@ const input = ref('')
 const output = ref('')
 const error = ref<string | null>(null)
 const fileInput = ref<HTMLInputElement | null>(null)
+const sortKeys = ref(false)
+const showQuery = ref(false)
+const jqExpr = ref('.')
+const jqError = ref<string | null>(null)
 
 const { copy, copied } = useClipboard()
+const { run: runJq, loading: jqLoading } = useJq()
 
 function openFilePicker() {
   fileInput.value?.click()
@@ -37,21 +43,39 @@ function onFileSelected(event: Event) {
 }
 
 function runFormat() {
-  const result = formatJson(input.value)
+  const result = formatJson(input.value, { sortKeys: sortKeys.value })
   output.value = result.output
   error.value = result.error
+  jqError.value = null
 }
 
 function runMinify() {
-  const result = minifyJson(input.value)
+  const result = minifyJson(input.value, { sortKeys: sortKeys.value })
   output.value = result.output
   error.value = result.error
+  jqError.value = null
+}
+
+async function runQuery() {
+  if (!input.value.trim()) {
+    jqError.value = 'Enter some JSON in the input area first.'
+    return
+  }
+  jqError.value = null
+  error.value = null
+  try {
+    output.value = await runJq(input.value, jqExpr.value)
+  } catch (e) {
+    jqError.value = e instanceof Error ? e.message : String(e)
+    output.value = ''
+  }
 }
 
 function clear() {
   input.value = ''
   output.value = ''
   error.value = null
+  jqError.value = null
 }
 
 function download() {
@@ -84,7 +108,7 @@ function download() {
           class="w-full h-72 rounded-lg border border-gray-200 bg-white px-3 py-2 font-mono text-sm text-gray-800 placeholder:text-gray-400 focus:border-yellow-400 focus:outline-none resize-none"
           spellcheck="false"
         />
-        <div class="flex flex-wrap gap-2">
+        <div class="flex flex-wrap items-center gap-2">
           <button
             type="button"
             class="rounded-lg bg-yellow-400 px-4 py-2 text-sm font-medium text-gray-900 hover:bg-yellow-500 transition-colors"
@@ -122,6 +146,14 @@ function download() {
           >
             Clear
           </button>
+          <label class="inline-flex items-center gap-1.5 cursor-pointer select-none text-sm text-gray-600">
+            <input
+              v-model="sortKeys"
+              type="checkbox"
+              class="rounded border-gray-300 text-yellow-400 focus:ring-yellow-400"
+            />
+            Sort Keys
+          </label>
         </div>
       </div>
 
@@ -169,9 +201,57 @@ function download() {
       </div>
     </div>
 
+    <!-- jq Query section -->
+    <div class="mt-6">
+      <button
+        type="button"
+        class="inline-flex items-center gap-1.5 text-sm font-medium text-gray-500 hover:text-gray-700 transition-colors"
+        @click="showQuery = !showQuery"
+      >
+        <span>jq Query</span>
+        <span class="text-xs text-gray-400">{{ showQuery ? '▲' : '▼' }}</span>
+      </button>
+
+      <div v-if="showQuery" class="mt-3 rounded-lg border border-gray-200 bg-white p-4 flex flex-col gap-3">
+        <p class="text-xs text-gray-500">
+          Filter or transform the input JSON using a
+          <a href="https://jqlang.org" target="_blank" rel="noopener noreferrer" class="underline hover:text-gray-700">jq expression</a>.
+          The result appears in the Output area.
+        </p>
+        <div class="flex gap-2 items-center">
+          <label for="jq-expr" class="sr-only">jq expression</label>
+          <input
+            id="jq-expr"
+            v-model="jqExpr"
+            type="text"
+            placeholder=". (identity)"
+            spellcheck="false"
+            class="flex-1 rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 font-mono text-sm text-gray-800 placeholder:text-gray-400 focus:border-yellow-400 focus:outline-none"
+            @keydown.enter="runQuery"
+          />
+          <button
+            type="button"
+            :disabled="jqLoading"
+            class="rounded-lg bg-yellow-400 px-4 py-2 text-sm font-medium text-gray-900 hover:bg-yellow-500 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            @click="runQuery"
+          >
+            {{ jqLoading ? 'Running…' : 'Run' }}
+          </button>
+        </div>
+        <p
+          v-if="jqError"
+          role="alert"
+          aria-live="polite"
+          class="text-sm text-red-600"
+        >
+          {{ jqError }}
+        </p>
+      </div>
+    </div>
+
     <!-- Privacy note -->
     <p class="mt-8 text-xs text-gray-400">
-      Your JSON is processed locally and never sent to a server.
+      Your JSON is processed locally and never sent to a server. jq queries run entirely in your browser using WebAssembly.
     </p>
   </main>
 </template>
