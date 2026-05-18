@@ -15,7 +15,7 @@ gh issue create
   → git push
   → gh pr create --base develop
   → merge PR on GitHub
-  → git checkout develop && git pull origin main && git push origin develop
+  → git checkout develop && git pull origin develop
 ```
 
 ---
@@ -74,6 +74,7 @@ Follow the [project conventions](../../.github/copilot-instructions.md):
 - Update `app/data/tools.ts` when adding a tool
 - Update `app/pages/index.vue` `iconMap` when adding a tool icon
 - Add unit tests for utility functions in `tests/`
+- Add or update the matching spec in `docs/specs/` using `_template.md`
 
 ---
 
@@ -94,6 +95,7 @@ pnpm test:e2e
 **Verify metadata and docs:**
 - [ ] Tool entry added to `app/data/tools.ts` with `name`, `route`, `description`, `tags`, `icon`, `category` (if adding a tool)
 - [ ] Icon added to `iconMap` in `app/pages/index.vue` (if adding a new icon)
+- [ ] Tool spec follows `docs/specs/_template.md` and includes SEO, privacy, accessibility, metadata, tests, and a quality checklist
 - [ ] README updated (if adding a major tool)
 
 **Verify quality:**
@@ -156,8 +158,7 @@ Sync `develop` locally to avoid it falling behind:
 
 ```bash
 git checkout develop
-git pull origin main
-git push origin develop
+git pull origin develop
 ```
 
 ---

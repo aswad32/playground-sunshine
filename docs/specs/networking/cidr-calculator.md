@@ -10,7 +10,7 @@ Allow users to enter an IPv4 address in CIDR notation (e.g. `192.168.1.0/24`) an
 
 ## Category
 
-Networking *(new category — add to `CATEGORY_ORDER` in `data/tools.ts`)*
+Networking
 
 ## Icon
 
@@ -203,7 +203,6 @@ function intToIp(n: number): string {
     n          & 0xff,
   ].join('.')
 }
-```
 ```
 
 ---

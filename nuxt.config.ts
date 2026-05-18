@@ -8,7 +8,7 @@ export default defineNuxtConfig({
     name: 'Playground Sunshine',
   },
 
-  modules: ['@nuxtjs/tailwindcss', '@vercel/analytics', '@nuxtjs/sitemap'],
+  modules: ['@nuxtjs/tailwindcss', '@nuxtjs/sitemap'],
 
   sitemap: {
     // All pages/ routes are auto-discovered; nothing extra needed for a static site
