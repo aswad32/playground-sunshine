@@ -84,6 +84,11 @@ A collection of fast, free, privacy-friendly tools for developers and everyday u
 | [Wordle Clone](/tools/wordle) | Guess the 5-letter word in 6 tries — color-coded feedback and win/loss stats |
 | [Nonogram / Picross](/tools/nonogram) | Solve pixel-art logic puzzles with row and column clue guides |
 
+### Networking
+| Tool | Description |
+|---|---|
+| [CIDR Calculator](/tools/cidr-calculator) | Calculate network address, broadcast, usable hosts, subnet mask, and more from any IPv4 CIDR block |
+
 ---
 
 ## Tech Stack
@@ -177,6 +182,7 @@ playground-sunshine/
 │   ├── images/
 │   ├── colors/
 │   ├── games-puzzles/
+│   ├── networking/
 │   └── contributing.md     # Full contribution workflow
 ├── e2e/                    # Playwright end-to-end tests
 ├── tests/                  # Vitest unit tests (mirrors utils/)

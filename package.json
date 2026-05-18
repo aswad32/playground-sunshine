@@ -15,7 +15,6 @@
   "dependencies": {
     "@nuxtjs/sitemap": "^8.0.15",
     "@toon-format/toon": "^2.2.0",
-    "@vercel/analytics": "^2.0.1",
     "diff": "^9.0.0",
     "dompurify": "^3.4.2",
     "jq-web": "^0.6.2",
