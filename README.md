@@ -88,6 +88,7 @@ A collection of fast, free, privacy-friendly tools for developers and everyday u
 | Tool | Description |
 |---|---|
 | [CIDR Calculator](/tools/cidr-calculator) | Calculate network address, broadcast, usable hosts, subnet mask, and more from any IPv4 CIDR block |
+| [IPv6 CIDR Calculator](/tools/ipv6-cidr-calculator) | Calculate IPv6 network address, range, prefix details, address type, and reverse DNS zone from any IPv6 CIDR block |
 
 ---
 

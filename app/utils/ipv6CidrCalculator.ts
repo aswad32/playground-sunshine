@@ -137,10 +137,30 @@ export function compressIpv6(expanded: string): string {
   return result
 }
 
-/** Build the subnet mask BigInt from prefix length. */
-function prefixToMaskBigInt(prefix: number): bigint {
+/**
+ * Build the 128-bit subnet mask from a prefix length.
+ * Exported as the spec-level name `cidrToIpv6Mask`.
+ */
+export function cidrToIpv6Mask(prefix: number): bigint {
   if (prefix === 0) return 0n
   return ((1n << 128n) - 1n) ^ ((1n << BigInt(128 - prefix)) - 1n)
+}
+
+// Internal alias used throughout this file
+const prefixToMaskBigInt = cidrToIpv6Mask
+
+/**
+ * Convert a compressed or expanded IPv6 address string to a BigInt.
+ */
+export function ipv6ToBigInt(address: string): bigint {
+  return hexToBigInt(expandIpv6(address))
+}
+
+/**
+ * Convert a BigInt to a compressed IPv6 address string.
+ */
+export function bigIntToIpv6(n: bigint): string {
+  return compressIpv6(hexToExpandedAddress(bigIntToHex(n)))
 }
 
 /** Format a BigInt address as expanded colon notation (8 groups of 4 hex). */
@@ -184,13 +204,20 @@ const ADDRESS_RANGES: Ipv6Range[] = [
   { ...rangeFromCidr('ff00::/8'), type: 'Multicast' },
 ]
 
-export function getIpv6AddressType(addressBigInt: bigint): Ipv6AddressType {
+function classifyBigInt(addressBigInt: bigint): Ipv6AddressType {
   for (const range of ADDRESS_RANGES) {
     if ((addressBigInt & range.mask) === range.base) {
       return range.type
     }
   }
   return 'Global unicast'
+}
+
+/**
+ * Classify an IPv6 address string (compressed or expanded) into a named type.
+ */
+export function getIpv6AddressType(address: string): Ipv6AddressType {
+  return classifyBigInt(ipv6ToBigInt(address))
 }
 
 // --- Reverse DNS zone ---
@@ -201,9 +228,10 @@ export function getIpv6AddressType(addressBigInt: bigint): Ipv6AddressType {
  */
 export function getReverseDnsZone(networkHex: string, prefix: number): string | null {
   if (prefix % 4 !== 0) return null
-  const nibbles = networkHex.split('').reverse()
-  // Number of nibbles to include = prefix / 4
   const count = prefix / 4
+  // /0 is the root IPv6 reverse zone
+  if (count === 0) return 'ip6.arpa'
+  const nibbles = networkHex.split('').reverse()
   const zone = nibbles.slice(32 - count).join('.') + '.ip6.arpa'
   return zone
 }
@@ -244,7 +272,6 @@ export function parseIpv6Cidr(input: string): Ipv6CidrResult {
   const addrExpanded = bigIntToExpandedAddress(addrBigInt)
   const addrCompressed = bigIntToCompressedAddress(addrBigInt)
 
-  const lastExpanded = bigIntToExpandedAddress(lastBigInt)
   const lastCompressed = bigIntToCompressedAddress(lastBigInt)
 
   const maskExpanded = bigIntToExpandedAddress(maskBigInt)
@@ -253,7 +280,7 @@ export function parseIpv6Cidr(input: string): Ipv6CidrResult {
   const totalAddresses = wildcardBigInt + 1n
   const hostBits = 128 - prefix
 
-  const addressType = getIpv6AddressType(addrBigInt)
+  const addressType = classifyBigInt(addrBigInt)
 
   const reverseDns = getReverseDnsZone(networkHex, prefix)
   const reverseDnsZone = reverseDns ?? 'Not aligned on a DNS nibble boundary'

@@ -32,24 +32,52 @@ async function copyField(key: string, value: string) {
 
 let debounceTimer: ReturnType<typeof setTimeout>
 
-function calculate() {
-  clearTimeout(debounceTimer)
-  debounceTimer = setTimeout(() => {
-    error.value = null
-    result.value = null
+/** Derived CIDR string shown in Address+Prefix mode when both fields produce a valid result. */
+const derivedCidr = computed(() => result.value?.cidr ?? '')
 
+function runParse(): Ipv6CidrResult {
+  if (mode.value === 'cidr') {
+    return parseIpv6Cidr(cidrInput.value)
+  }
+  return parseIpv6AddressPrefix(addressInput.value, prefixInput.value)
+}
+
+function hasInput(): boolean {
+  if (mode.value === 'cidr') return !!cidrInput.value.trim()
+  return !!(addressInput.value.trim() || prefixInput.value.trim())
+}
+
+/**
+ * Called on @input — updates result silently while the user is still typing.
+ * Errors are never shown mid-type; the output is simply cleared on failure.
+ */
+function calculateSilent() {
+  clearTimeout(debounceTimer)
+  error.value = null
+  debounceTimer = setTimeout(() => {
+    result.value = null
+    if (!hasInput()) return
     try {
-      if (mode.value === 'cidr') {
-        if (!cidrInput.value.trim()) return
-        result.value = parseIpv6Cidr(cidrInput.value)
-      } else {
-        if (!addressInput.value.trim() && !prefixInput.value.trim()) return
-        result.value = parseIpv6AddressPrefix(addressInput.value, prefixInput.value)
-      }
-    } catch (e) {
-      error.value = e instanceof Error ? e.message : 'Invalid input.'
+      result.value = runParse()
+    } catch {
+      // Swallow — invalid partial input should not show an error while typing
     }
   }, 200)
+}
+
+/**
+ * Called on @blur and @keyup.enter — shows validation errors on commit.
+ */
+function calculateWithErrors() {
+  clearTimeout(debounceTimer)
+  error.value = null
+  result.value = null
+  if (!hasInput()) return
+  try {
+    result.value = runParse()
+  } catch (e) {
+    error.value = e instanceof Error ? e.message : 'Invalid input.'
+  }
 }
 
 function switchMode(m: Mode) {
@@ -175,8 +203,9 @@ const addressTypeColour: Record<Ipv6AddressType, string> = {
         spellcheck="false"
         autocomplete="off"
         class="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 font-mono text-sm text-gray-800 placeholder:text-gray-400 focus:border-yellow-400 focus:outline-none"
-        @input="calculate"
-        @blur="calculate"
+        @input="calculateSilent"
+        @blur="calculateWithErrors"
+        @keyup.enter="calculateWithErrors"
       />
     </div>
 
@@ -192,8 +221,9 @@ const addressTypeColour: Record<Ipv6AddressType, string> = {
           spellcheck="false"
           autocomplete="off"
           class="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 font-mono text-sm text-gray-800 placeholder:text-gray-400 focus:border-yellow-400 focus:outline-none"
-          @input="calculate"
-          @blur="calculate"
+          @input="calculateSilent"
+          @blur="calculateWithErrors"
+          @keyup.enter="calculateWithErrors"
         />
       </div>
       <div class="flex flex-col gap-2">
@@ -206,10 +236,23 @@ const addressTypeColour: Record<Ipv6AddressType, string> = {
           max="128"
           placeholder="e.g. 64"
           class="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 font-mono text-sm text-gray-800 placeholder:text-gray-400 focus:border-yellow-400 focus:outline-none"
-          @input="calculate"
-          @blur="calculate"
+          @input="calculateSilent"
+          @blur="calculateWithErrors"
+          @keyup.enter="calculateWithErrors"
         />
       </div>
+    </div>
+
+    <!-- Auto-populated CIDR field in Address+Prefix mode -->
+    <div v-if="mode === 'address' && derivedCidr" class="flex flex-col gap-2 mb-6">
+      <label class="text-sm font-medium text-gray-700">CIDR Notation (auto-populated)</label>
+      <input
+        type="text"
+        :value="derivedCidr"
+        readonly
+        aria-readonly="true"
+        class="w-full rounded-lg border border-gray-100 bg-gray-50 px-3 py-2 font-mono text-sm text-gray-600 cursor-default focus:outline-none"
+      />
     </div>
 
     <!-- Actions -->
