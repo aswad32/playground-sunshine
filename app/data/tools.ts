@@ -284,6 +284,14 @@ const tools: Tool[] = [
     icon: 'Network',
     category: 'Networking',
   },
+  {
+    name: 'IPv6 CIDR Calculator',
+    route: '/tools/ipv6-cidr-calculator',
+    description: 'Calculate IPv6 network address, range, prefix details, address type, and reverse DNS zone directly in your browser.',
+    tags: ['ipv6', 'cidr', 'networking', 'subnet', 'ip', 'calculator'],
+    icon: 'Network',
+    category: 'Networking',
+  },
 ]
 
 export default tools
