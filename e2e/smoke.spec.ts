@@ -61,3 +61,47 @@ test.describe('UUID Generator', () => {
     await expect(page.locator('body')).toContainText(uuidPattern)
   })
 })
+
+test.describe('IPv6 CIDR Calculator', () => {
+  test('loads and shows empty state', async ({ page }) => {
+    await page.goto('/tools/ipv6-cidr-calculator')
+    await page.waitForLoadState('networkidle')
+    await expect(page.getByRole('heading', { name: /ipv6 cidr calculator/i })).toBeVisible()
+    await expect(page.locator('body')).toContainText('Enter an IPv6 CIDR block')
+  })
+
+  test('calculates results for a valid CIDR on blur', async ({ page }) => {
+    await page.goto('/tools/ipv6-cidr-calculator')
+    await page.waitForLoadState('networkidle')
+
+    const input = page.locator('#cidr-input')
+    await input.pressSequentially('2001:db8::1/64')
+    await input.blur()
+
+    // Network address should appear in the result grid
+    await expect(page.locator('body')).toContainText('2001:db8::')
+    await expect(page.locator('body')).toContainText('Documentation')
+  })
+
+  test('does not show error while typing incomplete input', async ({ page }) => {
+    await page.goto('/tools/ipv6-cidr-calculator')
+    await page.waitForLoadState('networkidle')
+
+    // Type something invalid without blurring
+    await page.locator('#cidr-input').pressSequentially('2001:db8')
+
+    // Error must not appear mid-type
+    await expect(page.getByRole('alert')).not.toBeVisible()
+  })
+
+  test('shows validation error after blur on invalid input', async ({ page }) => {
+    await page.goto('/tools/ipv6-cidr-calculator')
+    await page.waitForLoadState('networkidle')
+
+    const input = page.locator('#cidr-input')
+    await input.pressSequentially('notanipv6/64')
+    await input.blur()
+
+    await expect(page.getByRole('alert')).toBeVisible()
+  })
+})
